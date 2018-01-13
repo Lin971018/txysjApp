@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>同欣易送检</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">		
+		<link href="css/mui.min.css" rel="stylesheet"/>    
+		
+		<style>
+			p {
+				text-indent: 22px;
+				padding: 5px 8px;
+			}
+			
+			html,
+			body,
+			.mui-content {
+				
+			}			
+			h4 {
+				margin-left: 5px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">关于</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<h4 style="margin-top:10px;">系统简介</h4>
+				<p>建筑行业资料送检APP应用是于2017年全新打造的一款建筑行业移动互联网平台应用工具。系统通过与同欣工程资料编制与送检管理一体化软件数据接口，实现手机与项目绑定，通过手机查看项目送检计划，用手机提醒试件送检，用手机查阅送检标准要求，进而实现内业资料员与外业送检员双向数据同步交互。</p>
+				
+				<h4>主要功能</h4>
+				<p style="text-indent: 0px;">（1）送检计划管理：试件提醒、气温查询、时间查询、部位进度查询<br />
+				（2）分户验收实测实量：测点类型、测点位置、实测值<br />
+				（3）小组任务管理：任务下达、任务回复、小组成员<br />
+				（4）送检标准查询：基础工程、主体结构工程、装饰工程、节能工程等主要分部工程<br />
+				（5）统表范例查询：根据广东省2016版新统表编制
+				</p>				
+				<h4>版本编号</h4>
+				<p>当前版本为<b id="bbh"></b>，可到"我的"的"更多设置"中，检查最新版本进行下载。</p>
+				
+			</div>			
+		</div>
+		<script src="js/mui.min.js"></script>
+		
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			//处理点击事件，需要打开原生浏览器
+			mui('body').on('tap', 'a', function(e) {
+				var href = this.getAttribute('href');
+				if (href) {
+					if (window.plus) {
+						plus.runtime.openURL(href);
+					} else {
+						location.href = href;
+					}
+				}
+			});			
+			mui.plusReady(function() {		
+				var bbh =document.getElementById('bbh');
+				var thisversion=plus.runtime.version;
+				bbh.innerText=thisversion;
+			});
+		</script>
+		<script src="js/setPullToRefresh.js" ></script>
+	</body>
+
+</html>
