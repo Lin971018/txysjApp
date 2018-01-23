@@ -18,7 +18,7 @@
 	<body>
 		<header class="mui-bar mui-bar-nav">
 		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">新增检验批检查任务</h1>
+		    <h1 class="mui-title">新增卡片</h1>
 		</header>
 		<div class="mui-content">
 		    <form class="mui-input-group">
@@ -58,18 +58,22 @@
 			mui.plusReady(function(){
 				//获取传值 
 				var self = plus.webview.currentWebview();
-
-				cs = self.cs//资料库
+				zlkmc = self.cs//资料库
 				csbh = self.csbh;//表格编号
-				csmc=self.csmc;//表格名称
+				csmc = self.csmc;//表格名称
 				var doc = document;
-				var divisionType = doc.getElementById("divisionType");
-				var	applicationTime = doc.getElementById("applicationTime");
+//				验收日期
+				var	applicationTime = doc.getElementById("applicationTime");	
+//				保存按钮
 				var data_save = doc.getElementById("data_save");
+//				资料库名称
 				var constructionUnits = doc.getElementById("constructionUnits");
+//				表格编号
 				var supervision = doc.getElementById("supervision");
+//				验收部位
 				var prospectingUnits = doc.getElementById("prospectingUnits");
-				var designUnits = doc.getElementById("designUnits");
+				
+				
 				//当前日期
 				var myDate=new Date();
 				var mytime=myDate.getTime();
@@ -77,13 +81,12 @@
 				applicationTime.value = myDate.getFullYear()+"-"+(myDate.getMonth()+1)+"-"+myDate.getDate();
 				
 				//动态添加资料库名称
-				var constrs = cs.split(",");
+				var constrs = zlkmc.split(",");
 				for(var i=0;i<constrs.length;i++){
 					var option = doc.createElement("option");
 					option.innerHTML = constrs[i];
 					constructionUnits.appendChild(option);
 				}
-				
 				//动态添加表格编号
 				var supervisions = csbh.split(",");
 				for(var i=0;i<constrs.length;i++){
@@ -109,24 +112,29 @@
 				});
 				//信息保存(待开发)
 				data_save.addEventListener('tap',function(){
-					mui.ajax(url+'my_division/division_add.php',{
+					mui.ajax(url+'my_plus/division_add.php',{
 						data:{
-							divisionType:divisionType.value,
-							applicationTime:applicationTime.value,
-							timestamp:timestamp,
-							pj_timestamp:pj_timestamp,
-							pj_name:pj_name,
-							constructionUnits:constructionUnits.value,
-							supervision:supervision.value,
+//							资料库名称
+							zlkmc:zlkmc,
+//							表格编号
+							csbh:csbh,
+//							表格名称
+							csmc:csmc,
+//							验收部位
 							prospectingUnits:prospectingUnits.value,
-							designUnits:designUnits.value
+//							验收日期
+							applicationTime:applicationTime.value,
+//							当前时间戳
+							timestamp:timestamp,
+							
 						},
 						type:'post',
 						dataType:'json',
 						timeout:10000,
 						success:function(data){
+//							alert(data);
 							if(data.result=='success'){
-								var target=plus.webview.getWebviewById('../my_division/division_list.html');
+								var target=plus.webview.getWebviewById('my_project_ysjl.html');
 								target.reload(true);
 								mui.back();
 								mui.toast('保存成功！',{ duration:'long', type:'div' });

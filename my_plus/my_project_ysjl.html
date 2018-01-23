@@ -57,14 +57,14 @@
             
 			<a id="info" class="mui-icon mui-icon-plus mui-pull-right" style="color: #999;"></a>
 			-->
-			<h1 class="mui-title">我的工程</h1>
+			<h1 id="refresh" class="mui-title">我的工程</h1>
 		</header>
 		<div>
 			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
             	<span class="mui-icon mui-icon-plusempty"></span>
        		</button>
 		</div>
-		<div class="mui-content">
+		<div  id='card' class="mui-content">
 			<!-- 累计温度  -->
 			<div id="cdbzPopover" class="mui-popover">
 	        	<div class="mui-popover-arrow"></div>	        		
@@ -99,6 +99,22 @@
 		<script src="../js/service.js" ></script>
 		<script type="text/javascript">	
 		
+		mui.init({
+//				preloadPages:[
+//				    {
+//				      url:'division_details.html',
+//				      id:'list'
+//				    } 
+//				],
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			});
+		mui('.mui-scroll-wrapper').scroll({
+			deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+		    });
+		    
 		mui.plusReady(function(){
 			//获取项目mobile值
 			var self = plus.webview.currentWebview();
@@ -117,6 +133,11 @@
 			var todaydate3=year+'-'+month+'-'+day+' '+hours+':'+minutes+':'+seconds;
 			var diqu=document.getElementById('diqu');
 			var	addNew = document.getElementById("addNew");
+			var	refresh = document.getElementById("refresh");
+			//监听标题栏的双击事件(刷新页面)
+			refresh.addEventListener('doubletap',function () {
+				window.location.reload();
+			});
 			
 			//新增按钮
 			addNew.addEventListener('tap',function(){
@@ -157,20 +178,22 @@
                 
 				
 		
-		var myproject = function(id, bh1, mc1, ysbw1,ysrq1) {
+		var myproject = function(id, timestamp , bgbh , bgbgmc, ysbw , ysrq) {
 //			alert(ysbw);
-			var mc=mc1;
+			var bgmc=bgbh+" "+bgbgmc;
 			//汉字编码，为了get传值
-			var Name=encodeURI(encodeURI(mc));
-			var CityName=encodeURI(encodeURI(mc));
+			var Name=encodeURI(encodeURI(bgmc));
+			var CityName=encodeURI(encodeURI(bgmc));
 //			alert(CityName);
-			var ysbw='验收部位：';
-			var ysrq='验收日期：';
+			var ysbwa='验收部位：';
+			var ysrqa='验收日期：';
 			var muicontent=document.getElementsByClassName('mui-content');
 			var div=document.createElement('div');
 			div.className='mui-card margintop10px';			
 			muicontent[0].appendChild(div);
 			var ul=document.createElement('ul');
+			ul.id=id;
+			ul.timestamp=timestamp;
 			ul.className='mui-table-view ';
 			div.appendChild(ul);
 			var li=document.createElement('li');
@@ -182,7 +205,7 @@
 			var div2=document.createElement('div');
 			div2.className='mui-media-body';			
 			a.appendChild(div2);
-			var txt=document.createTextNode(mc);
+			var txt=document.createTextNode(bgmc);
 			div2.appendChild(txt);
 			var p=document.createElement('p');
 			p.className='mui-ellipsis my_color_white';
@@ -206,7 +229,7 @@
 			var p4=document.createElement('p');
 			p4.className='mui-ellipsis my_fontsize my_color_blue my_paddingleft';
 			div3.appendChild(p4);
-			var txt6=document.createTextNode(ysbw+ysbw1);
+			var txt6=document.createTextNode(ysbwa+ysbw);
 			p4.appendChild(txt6);
 			var p5=document.createElement('p');
 			p5.className='mui-ellipsis my_fontsize my_color_blue paddingleft34px';
@@ -230,12 +253,97 @@
 			var p7=document.createElement('p');
 			p7.className='mui-ellipsis my_fontsize my_color_blue my_paddingleft';
 			div4.appendChild(p7);
-			var txt9=document.createTextNode(ysrq+ysrq1);
+			var txt9=document.createTextNode(ysrqa+ysrq);
 			p7.appendChild(txt9);
 			
 	
 		};		
 		
+		//长按卡项进行删除操作
+	mui('#card').on('longtap', 'ul', function() {
+		var ulId=this.id;
+		var timestamp = this.timestamp;
+
+		var btnArray = [
+
+			{title:"删除"}
+		];
+		plus.nativeUI.actionSheet( {
+			title:"操作",
+			cancel:"取消",
+			buttons:btnArray
+		}, function(e){
+			var index = e.index;
+			var nextpage='';
+			switch (index){
+				case 0:	//取消	
+					break;
+//				
+				case 1:	//删除
+					nextpage='';
+					var bts=["是","否"];
+					plus.nativeUI.confirm("您确认删除此卡项吗？",function(e){
+						var i=e.index;
+						if(i==0){
+							//是
+						sccg(ulId,timestamp);
+                            
+						}else{
+							//否
+									
+						}
+					},"同欣二期",bts);
+					break;
+			}
+			mui.openWindow({
+				url: nextpage,
+				id: nextpage,
+				styles: {
+					hardwareAccelerated:false
+				},
+				extras:{
+					name:'wushaohang_lidegejing'
+				},
+				show:{
+					autoShow:true,//页面loaded事件发生后自动显示
+					aniShow:'slide-in-right',//页面显示动画
+					duration:'100'//页面动画持续时间
+				},
+				waiting:{
+					autoShow:false,//自动显示等待框
+				},
+			});
+		});
+	});
+	
+//	删除草稿
+	var sccg=function xfzg(ulId,timestamp){
+		var caid = ulId;
+		var timestamp =timestamp;
+		mui.ajax(url+'adminphp/pc_ysjl_delete.php',{
+			data:{ 
+				ulId:caid,
+			    timestamp:timestamp
+
+			},
+//			dataType:'json',
+			type:'POST', 
+			timeout:10000,
+			
+			success:function(data){
+
+					alert("卡项删除成功！");
+					var wobj = plus.webview.currentWebview();					
+					wobj.reload(true);
+
+			}, 
+			error:function(xhr,type,errorThrown){
+				alert('ajax错误'+type+'---'+errorThrown);
+			}
+		});
+	};
+	
+	
 		var ksrq=document.getElementById('ksrq');
 		var jsrq=document.getElementById('jsrq');
 		var wdh=document.getElementById('wdh');
@@ -257,12 +365,13 @@
 				if(length > 1) {
 					for(var i = 0; i < length - 1; i++) {
 						var id = data[i].id;
+						var timestamp = data[i].时间戳;
 						var bgbh = data[i].表格编号;
 						var bgmc = data[i].表格名称;
 						var ysbw = data[i].验收部位;
 						var ysrq = data[i].验收日期;
-
-						myproject(id, bgbh, bgmc, ysbw,ysrq);
+						var kpzt = "已保存";
+						myproject(id, timestamp , bgbh , bgmc , ysbw , ysrq , kpzt);
 					}
 				} else {
 					alert("暂无数据");
