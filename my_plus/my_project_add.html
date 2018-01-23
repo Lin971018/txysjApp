@@ -62,6 +62,8 @@
 				csbh = self.csbh;//表格编号
 				csmc = self.csmc;//表格名称
 				var doc = document;
+//              名称表格
+				var	bgmc = doc.getElementById("bgmc");
 //				验收日期
 				var	applicationTime = doc.getElementById("applicationTime");	
 //				保存按钮
@@ -115,17 +117,17 @@
 					mui.ajax(url+'my_plus/division_add.php',{
 						data:{
 //							资料库名称
-							zlkmc:zlkmc,
+							constructionUnits:constructionUnits.value,
 //							表格编号
-							csbh:csbh,
+							supervision:supervision.value,
 //							表格名称
-							csmc:csmc,
+							bgmc:bgmc.value,
 //							验收部位
 							prospectingUnits:prospectingUnits.value,
 //							验收日期
 							applicationTime:applicationTime.value,
 //							当前时间戳
-							timestamp:timestamp,
+							timestamp:timestamp
 							
 						},
 						type:'post',
