@@ -54,6 +54,15 @@
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
 		<script type="text/javascript">
+            //防止重复点击保存按钮
+            function fncSubmit(){  
+            setTimeout(function(){  
+                alert('保存新增卡片');  
+            },1000);  
+            this.disabled = true; 
+            }   
+            document.getElementById('data_save').onclick = fncSubmit;
+        
 			mui.init()
 			mui.plusReady(function(){
 				//获取传值 
