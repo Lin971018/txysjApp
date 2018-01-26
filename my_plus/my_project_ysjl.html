@@ -118,8 +118,9 @@
 		mui.plusReady(function(){
 			//获取项目mobile值
 			var self = plus.webview.currentWebview();
-			var mobile = self.mobile;			
-			//alert(mobile);		
+			var mobile = self.mobile;
+			var uid = self.uid;
+//			alert(uid);		
 			
 			var today = new Date();
 			var year=today.getFullYear();
@@ -156,7 +157,8 @@
 								mui.openWindow({
 									url:"my_project_ysjl_add.html",
 									extras:{
-//										待开发					
+										    mobile:mobile,
+                                            uid:uid
 									},
 									show: {
 										aniShow:"pop-in"

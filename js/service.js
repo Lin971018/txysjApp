@@ -18,9 +18,9 @@ var TxtqUrl='http://202.105.179.167:888/ServerPage/AppService.ashx';
 */
 
 /*本地的连接后台*/
-var imgurl='http://192.168.0.104:8082/txysj/pc_upload/';
-var url='http://192.168.0.104:8082/txysj/';
-var serurl='http://192.168.0.104:8082/txysj/';
+var imgurl='http://192.168.0.198:80/txysj/pc_upload/';
+var url='http://192.168.0.198/txysj/';
+var serurl='http://192.168.0.198:80/txysj/';
 
 var servername='wangka';
 var serverpassword='123456';

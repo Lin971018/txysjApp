@@ -79,8 +79,9 @@
 		mui.plusReady(function(){
 			//获取项目mobile值
 			var self = plus.webview.currentWebview();
-			var mobile = self.mobile;			
-			//alert(mobile);		
+			var mobile = self.mobile;
+			var uid = self.uid;
+//			alert(uid);		
 			
 			var today = new Date();
 			var year=today.getFullYear();
@@ -99,6 +100,7 @@
 				data:{
 					mode:'getprojectmore',
 					mobile:mobile,
+					uid:uid,
 					version:123
 				},
 				dataType:'json',

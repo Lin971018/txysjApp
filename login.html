@@ -106,6 +106,10 @@
 					<label>手机</label>
 					<input id='shji' type="text" class="mui-input-clear mui-input" placeholder="" value="">
 				</div>
+				<div class="mui-input-row my_none">
+					<label>用户id</label>
+					<input id='uid' type="text" class="mui-input-clear mui-input" placeholder="" value="">
+				</div>
 			</form>
 			<form class="mui-input-group">
 				<ul class="mui-table-view mui-table-view-chevron">
@@ -156,6 +160,7 @@
 						*/
 						//$.fire(mainPage, 'show', null);
 						var shji=document.getElementById('shji');
+						var uid = document.getElementById("uid");
 						setTimeout(function() {
 							$.openWindow({
 								url: 'index.html',
@@ -165,7 +170,8 @@
 								},
 								extras:{
 									//传值
-									mobile:shji.value
+									mobile:shji.value,
+									uid:uid.value
 								},
 								waiting: {								
 									autoShow: true,

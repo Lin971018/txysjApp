@@ -29,6 +29,7 @@
 				//alert(data.result);
 				if (data.result=='success') {					
 					document.getElementById('shji').value=data.shji;
+					document.getElementById("uid").value=data.uid;
 					return callback();
 				} else{					
 					return callback('用户名或密码错误');				

@@ -80,6 +80,8 @@
 			//获取传值
 			var self = plus.webview.currentWebview();			
 			var mobile = self.mobile;
+			var uid = self.uid;
+//			alert(uid);
 			
 			//判断积分是否大于等于100，是否有查看资料知识的权限
 			var judgementJfen=function(jfen){
@@ -139,7 +141,9 @@
 					url: this.href,
 					styles: webview_style,
 					extras:{						
-						sjzslx:sjzslx						
+						sjzslx:sjzslx,
+						mobile:mobile,
+						uid:uid
 					},
 					show: {
 						//autoShow:false,

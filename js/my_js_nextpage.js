@@ -102,7 +102,8 @@ mui('.my_list').on('tap', 'a', function() {
 			styles: webview_style,
 			extras:{
 				zhi:"www",
-				mobile:mobile
+				mobile:mobile,
+				uid:uid
 			},
 			show: {		
 				//autoShow:false,

@@ -67,6 +67,12 @@
 				swipeBack:true //启用右滑关闭功能
 			});
 			
+			mui.plusReady(function(){
+				var self = plus.webview.currentWebview();
+			    var mobile = self.mobile;
+			    var uid = self.uid;
+//			    alert(uid);
+			
 			//获取url参数值
 			function geturl(name){
 				var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
@@ -104,7 +110,9 @@
 					extras:{
 						xmid:xmid,
 						Name:Name,
-						CityName:CityName
+						CityName:CityName,
+						mobile:mobile,
+						uid:uid
 					},
 					show: {
 						aniShow: aniShow
@@ -114,6 +122,7 @@
 					}
 				});
 			});
+		});
 		</script>
 	</body>
 </html>

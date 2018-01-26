@@ -325,7 +325,8 @@
 					"my_plus/my_project_sjjh.html",
 					"my_plus/my_project_wdcx.html",
 					"my_plus/my_project_sjcx.html",
-					"my_plus/my_project_bwjd.html"
+					"my_plus/my_project_bwjd.html",
+					"my_plus/my_project_ysjl.html"
 				],
 				"priority": 0
 			},
@@ -840,6 +841,50 @@
 					"js/mui.min.js",
 					"css/my_css.css",
 					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl.html": {
+				"resources": [
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"my_plus/my_project_scsl_scsl.html"
+				],
+				"refer": [
+					"my_plus/my_project_ysjl_add.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl_list.html": {
+				"resources": [],
+				"refer": [
+					"my_plus/my_project_add.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl_add.html": {
+				"resources": [],
+				"refer": [
+					"my_plus/my_project_ysjl_list.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_add.html": {
+				"resources": [
+					"css/my_project_fhys_xz.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_scsl_scsl.html": {
+				"resources": [
+					"js/common.js",
+					"my_plus/my_project_ysjl.html",
+					"js/immersed.js"
 				],
 				"refer": [],
 				"priority": 0

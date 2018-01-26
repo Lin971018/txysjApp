@@ -70,6 +70,8 @@
 				zlkmc = self.cs//资料库
 				csbh = self.csbh;//表格编号
 				csmc = self.csmc;//表格名称
+				mobile = self.mobile;//手机号码
+				uid = self.uid;//用户id
 				var doc = document;
 //              名称表格
 				var	bgmc = doc.getElementById("bgmc");
@@ -136,8 +138,9 @@
 //							验收日期
 							applicationTime:applicationTime.value,
 //							当前时间戳
-							timestamp:timestamp
-							
+							timestamp:timestamp,
+//                          用户id
+                            uid:uid
 						},
 						type:'post',
 						dataType:'json',

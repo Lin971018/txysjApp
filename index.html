@@ -41,7 +41,9 @@
       	mui.plusReady(function() {
       		//获取传值
       		var self = plus.webview.currentWebview();
-      		mobile = self.mobile;      	
+      		mobile = self.mobile;  
+      		uid = self.uid;
+//    		alert(uid);
       	});
       	//处理右上角关于图标的点击事件；	
       	var info=document.getElementById('info');
@@ -94,7 +96,8 @@
       				extras:{ 
       					//传值
       					str:str,
-      					mobile:mobile
+      					mobile:mobile,
+//    					uid:uid
       				}
       			});
       			return;

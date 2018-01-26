@@ -63,7 +63,9 @@
 		mui.plusReady(function() {
 			//获取传值
 			var self = plus.webview.currentWebview();			
-			var zlzslx= self.sjzslx;			
+			var zlzslx= self.sjzslx;
+			var mobile = self.mobile;
+			var uid = self.uid;
 			zlzslx=decodeURI(zlzslx);
 			
 			var doc=document;
@@ -191,7 +193,9 @@
 						Bh:Bh,
 						cs:zlzslx,
 						csbh:csbh,
-						csmc:csmc
+						csmc:csmc,
+						mobile:mobile,
+						uid:uid
 					},
 					show: {
 						//autoShow:false,
