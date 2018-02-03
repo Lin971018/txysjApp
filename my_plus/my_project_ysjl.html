@@ -202,7 +202,7 @@
 			li.className='mui-table-view-cell mui-media my_backgroundcolor_blue my_color_white';
 			ul.appendChild(li);
 			var a=document.createElement('a');			
-			a.href="my_project_scsl_scsl.html?id="+id+"&CityName="+CityName+"&Name="+Name;			
+			a.href="my_project_ysjl_ysjl.html?id="+id+"&CityName="+CityName+"&Name="+Name+"&timestamp="+timestamp;			
 			li.appendChild(a);
 			var div2=document.createElement('div');
 			div2.className='mui-media-body';			
@@ -363,6 +363,7 @@
 			timeout: 10000,
 			success: function(data) {
 //				alert(data[0].id+"ppppp");
+//              alert(data[0].时间戳)
 				var length = data.length;
 				if(length > 1) {
 					for(var i = 0; i < length - 1; i++) {
