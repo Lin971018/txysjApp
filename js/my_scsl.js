@@ -26,18 +26,18 @@ mui.plusReady(function() {
 		if(r != null) return unescape(r[2]);
 		return null;
 	}
-	var xmid = geturl("id");
-//	var gclb = geturl("gclb");
+	var xmid = geturl("gcid");
+	var gclb = geturl("gclb");
 	var mc = geturl("mc");
-	var sjc = geturl("timestamp");
+	var sjc = geturl("sjc");
 	var checkId = geturl("checkId");
 	var gcmc = geturl("gcmc");
 	//	alert(checkId);
-//      alert(sjc)
+
 	gcmc = decodeURI(gcmc);
-//	gclb = decodeURI(gclb);
+	gclb = decodeURI(gclb);
 	mc = decodeURI(mc);
-//				alert(xmid+"  "+mc+"  "+sjc); 
+	//			alert(xmid+"  "+gclb+"  "+mc+"  "+sjc);
 	var a1 = document.getElementById('a1');
 
 	var mc = document.getElementById("mc"); //姓名
@@ -85,7 +85,6 @@ mui.plusReady(function() {
 	var cdfj = [];
 	//右上角按钮监听
 	my_popover.addEventListener('tap', function() {
-//		alert(sjc)
 		var btnArray = [{
 				title: "新增测点"
 			},
@@ -125,8 +124,8 @@ mui.plusReady(function() {
 						},
 						extras: {
 							name: 'w',
-//							xmid: xmid,
-//							gclb: gclb,
+							xmid: xmid,
+							gclb: gclb,
 							sjc: sjc,
 							checkId: checkId
 						},
@@ -155,23 +154,46 @@ mui.plusReady(function() {
 		var flag = event.detail.flag;
 		if(flag == 'ok') {
 			var newcdlx = event.detail.cdlx;
-			var newcdgs = event.detail.cdgs;//测点个数
-			var newcdlxbh = event.detail.cdlxbh;//测点编号
-			var newqsbh = event.detail.qsbh-0;//起始编号数字部分
-//			window.location.reload();
-			for(var i = newqsbh; i < newcdgs-0+newqsbh; i++) { 
-				var newbhao = newcdlxbh + i;
-//				createscsl(newbhao, newcdlx);  
+			var newqsbh = event.detail.qsbh;
+			var newzzbh = event.detail.zzbh;
+			var newscz = event.detail.scz;
+			//截取
+			var qsbhzm = newqsbh.substring(1, 0); //起始编号字母部分
+			var qsbhsz = newqsbh.substring(1); //起始编号数字部分
+			var zzbhsz = newzzbh.substring(1); //终止编号数字部分
+			window.location.reload();
+			for(var i = qsbhsz; i <= zzbhsz; i++) {
+				var newbhao = qsbhzm + i;
+				createscsl(newbhao, newcdlx, newscz);
 				createkbcd(newbhao, '', '');
 			}
 		}
 	});
+	//附件查看按钮监听
+	//	fjck.addEventListener('tap', function() {
+	//
+	//		mui.openWindow({
+	//			url: 'my_project_fjck.html',
+	//			id: 'my_priject_fjck',
+	//			extras: {
+	//
+	//			},
+	//			show: {
+	//				aniShow: 'slide-in-right', //页面显示动画
+	//				duration: '100' //页面动画持续时间
+	//			},
+	//			waiting: {
+	//				autoShow: false, //自动显示等待框
+	//			}
+	//		});
+	//	});
+
 	//附件上传修改监听
-	fjscxg.addEventListener('tap', function() { 
+	fjscxg.addEventListener('tap', function() {
 		myform.classList.add('my_none');
 		uploader.classList.remove('my_none');
 	});
- 
+
 	//a1基本信息监听
 	a1.addEventListener('tap', function() {
 		myform.classList.remove('my_none');
@@ -216,19 +238,17 @@ mui.plusReady(function() {
 			//info.innerHTML = text+"\"按钮";
 		});
 	};
-	
 	//获取基本信息
 	var ajaxformdata = function() {
 		mui.ajax(url + 'my_plus/my_project_xinx.php', {
 			data: {
 				sjc: sjc
 			},
-			dataType: 'json',
+//			dataType: 'json',
 			type: 'post',
 			timeout: 10000,
 			success: function(data) {
-//				alert(data);
-//				alert(data[0].检查日期);
+										alert(data);
 				var length = data.length;
 				for(var i = 0; i < length - 1; i++) {
 					mc.value = data[i].名称;
@@ -237,7 +257,7 @@ mui.plusReady(function() {
 					jcry.value = data[i].检查人员;
 					sgbz.value = data[i].施工班组;
 					zzxm.value = data[i].组长姓名;
-					lxdh.value = data[i].联系电话;
+					lxdh.value = data[i].联系方式;
 					sgrq.value = data[i].施工日期;
 					gzms.value = data[i].工作描述;
 				}
@@ -249,120 +269,27 @@ mui.plusReady(function() {
 			}
 		});
 	};
-	//基本信息保存
-	save.addEventListener('tap',function(){
-		var mydata = {
-			mc:mc.value,//名称
-			jcbw:jcbw.value, //检查部位
-			jcrq:jcrq.value,//检查日期
-			jcry:jcry.value, //检查人员
-			sgbz:sgbz.value,//施工班组
-			zzxm:zzxm.value,//组长姓名
-			lxdh:lxdh.value,//联系电话
-			sgrq:sgrq.value,//施工日期
-			gzms:gzms.value,//工作描述
-			sjc:sjc
-		};
-		
-		
-	//验证数据，存到数据库
-	ajaxform (mydata, function(err) {
-					if(err) {
-						plus.nativeUI.toast(err);
-						return;
-					};
-					plus.nativeUI.alert('保存成功');
-//					mui.back();
-				});
 
-	});
-
-	//验证数据，存到数据库
-	var ajaxform = function(mydata,callback){
-		callback = callback || $.noop;
-		mydata = mydata || {};
-		mydata.mc = mydata.mc || '';
-		mydata.jcbw = mydata.jcbw || '';
-		mydata.jcrq = mydata.jcrq || '';
-		mydata.jcry = mydata.jcry || '';
-		mydata.sgbz = mydata.sgbz || '';
-		mydata.zzxm = mydata.zzxm || '';
-		mydata.lxdh = mydata.lxdh || '';
-		mydata.sgrq = mydata.sgrq || '';
-		mydata.gzms = mydata.gzms || '';
-		mydata.sjc = mydata.sjc || '';
-//		alert(mydata.sjc+'   '+mydata.mc+'   '+mydata.jcbw+'    '+mydata.jcrq+'   '+mydata.jcry+'    '+mydata.sgbz+'   '+mydata.zzxm);
-		if(mydata.mc.length < 1) {
-			return callback('名称不能为空！');
-		}
-		if(mydata.jcbw.length < 1) {
-			return callback('检查部位不能为空！');
-		}
-		if(mydata.jcrq.length < 1) {
-			return callback('检查日期不能为空！');
-		}
-		if(mydata.sgbz.length < 1) {
-			return callback('施工班组不能为空！');
-		}
-		if(mydata.zzxm.length < 1) {
-			return callback('组长姓名不能为空！');
-		}
-		if(mydata.sgrq.length < 1) {
-			return callback('施工日期不能为空！');
-		}
-		alert(mydata.mc)
-		mui.ajax(url+'my_plus/my_fhys_bj_xie.php',{
-			data:{
-				sjc: mydata.sjc,
-				mc: mydata.mc,
-				jcbw: mydata.jcbw,
-				jcrq: mydata.jcrq,
-				jcry: mydata.jcry,
-				sgbz: mydata.sgbz,
-				zzxm: mydata.zzxm,
-				lxdh: mydata.lxdh,
-				sgrq: mydata.sgrq,
-				gzms: mydata.gzms
-			},
-			dataType:'json',
-			type:'post',
-			timeout:10000,
-			success:function(data){
-//				alert(data); 
-				if (data.result == 'success') {
-					return callback();
-				} else{
-					return callback('服务器返回error');	
-				}
-			},
-			error:function(xhr,type,errorThrown){
-				//异常处理；
-			//alert('ajax错误'+type);
-				return callback('ajax错误'+type+errorThrown);
-			}
-		});
-	};
-	
 	//在画布中获取图片
 	var ajaxformdata2 = function() {
 		var sclb;
 		mui.ajax(url + 'my_plus/my_project_xinx2.php', {
 			data: {
 				sjc: sjc,
-//				gclb: gclb,
+				gclb: gclb,
 				sclb: '实测实量'
 			},
 			dataType: 'json',
 			type: 'post',
 			timeout: 10000,
 			success: function(data) {
-//						alert(data);
+				//						alert(data);
 				var length = data.length;
 				for(var i = 0; i < length - 1; i++) {
 					cdfj = data[i].测点附件;
 					mydiv.style.backgroundImage = "url(" + url + "upload/" + cdfj + ")";
 				}
-			}, 
+			},
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
 				//alert('ajax错误'+type); 
@@ -370,18 +297,83 @@ mui.plusReady(function() {
 			}
 		});
 	}
+
+	//基本信息，编辑保存函数
+//	var ajaxform = function(mydata, callback) {
+//		callback = callback || $.noop;
+//		mydata = mydata || {};
+//		mydata.mc = mydata.mc || '';
+//		mydata.jcbw = mydata.jcbw || '';
+//		mydata.jcrq = mydata.jcrq || '';
+//		mydata.jcry = mydata.jcry || '';
+//		mydata.sgbz = mydata.sgbz || '';
+//		mydata.zzxm = mydata.zzxm || '';
+//		mydata.lxdh = mydata.lxdh || '';
+//		mydata.sgrq = mydata.sgrq || '';
+//		if(mydata.mc.length < 1) {
+//			return callback('名称不能为空！');
+//		}
+//		if(mydata.jcbw.length < 1) {
+//			return callback('检查部位不能为空！');
+//		}
+//		if(mydata.jcrq.length < 1) {
+//			return callback('检查日期不能为空！');
+//		}
+//		if(mydata.sgbz.length < 1) {
+//			return callback('施工班组不能为空！');
+//		}
+//		if(mydata.zzxm.length < 1) {
+//			return callback('组长姓名不能为空！');
+//		}
+//		if(mydata.sgrq.length < 1) {
+//			return callback('施工日期不能为空！');
+//		}
+//		mui.ajax(url + 'my_fhys_bj_xie.php', {
+//			data: {
+//				sjc: sjc,
+//				mc: mydata.mc,
+//				jcbw: mydata.jcbw,
+//				jcrq: mydata.jcrq,
+//				jcry: mydata.jcry,
+//				sgbz: mydata.sgbz,
+//				zzxm: mydata.zzxm,
+//				lxdh: mydata.lxdh,
+//				sgrq: mydata.sgrq,
+//				gzms: mydata.gzms
+//			},
+//			dataType: 'json',
+//			type: 'post',
+//			timeout: 10000,
+//			success: function(data) {
+//				//						alert(data.result);
+//				if(data.result == 'success') {
+//					return callback();
+//				} else {
+//					return callback('服务器返回error');
+//				}
+//			},
+//			error: function(xhr, type, errorThrown) {
+//				//异常处理；
+//				//alert('ajax错误'+type);
+//				return callback('ajax错误' + type + errorThrown);
+//			}
+//		});
+//	};
+
 	//实测实量，获取数据函数 
 	var ajaxscsl = function() {
-//				alert(sjc+"  "+cdlx);
+		//		alert(sjc+"  "+gclb);
 		mui.ajax(url + 'my_fhys_bj_scsl.php', {
 			data: {
-				sjc: sjc
+				sjc: sjc,
+				xmid: xmid,
+				gclb: gclb
 			},
 			dataType: 'json',
 			type: 'post',
 			timeout: 10000,
 			success: function(data) {
-//								alert(data); 
+				//				alert(data); 
 				var length = data.length;
 				hgl1 = 0; //若测点不合格，hgl1+1 （单个测点类型）
 				hgl3 = 0; //每一个测点类型循环的轮数
@@ -392,12 +384,13 @@ mui.plusReady(function() {
 					var bhao = data[i].编号;
 					var cdlx = data[i].测点类型;
 					var scz = data[i].实测值;
-//					var sm = data[i].说明;
+					var sm = data[i].说明;
 					var pageX = data[i].pageX;
 					var pageY = data[i].pageY;
-//					var ppbz = data[i].评判标准;
+					var ppbz = data[i].评判标准;
+
 					var j = i + 1;
-//										alert(data[i].实测值 );
+					//					alert(i + "  " + length);
 					if(i >= 0 && i < length - 1) {
 						if(data[j].测点类型 != cdlx) {
 							var bz = 1;
@@ -407,28 +400,25 @@ mui.plusReady(function() {
 					} else {
 						var bz = '';
 					}
-//					alert(bhao+ "  "+cdlx+ "  "+scz+ "  "+bz+ "  "+length+"  "+i);
-					createscsl(bhao, cdlx, scz, bz, length, i);
+					createscsl(bhao, cdlx, scz, ppbz, bz, length, i);
 					createkbcd(bhao, pageX, pageY);
 				}
-								alert(length-1+"  "+hgl1); 
+				//				alert(length-1+"  "+hgl1); 
 			},
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
-				alert('ajax错误'+type);
-//				return callback('ajax错误' + type + errorThrown);
+				//alert('ajax错误'+type);
+				return callback('ajax错误' + type + errorThrown);
 			}
 		});
 	};
 
 	//实测实量列表创建函数
-	var createscsl = function(bhao, cdlx, scz, bz, length, i) {
-//		alert(bhao+ "  "+cdlx+ "  "+scz+ "  "+bz+ "  "+length+"  "+i);
+	var createscsl = function(bhao, cdlx, scz, ppbz, bz, length, i) {
 		hgl3 = hgl3 + 1;
 		hgl6 = hgl6 + 1;
 		hgl7 = ((1 - (hgl5 / hgl6).toFixed(2)) * 100) + '%';
-//				return(hgl7);
-//		alert(hgl3+ "  "+hgl6+ "  "+hgl7);
+		//		return(hgl7);
 		if(bz) {
 			var hgl2 = hgl1;
 			hgl4 = ((1 - (hgl2 / hgl3).toFixed(2)) * 100) + '%';
@@ -438,22 +428,23 @@ mui.plusReady(function() {
 		} else {
 
 		}
-		
-//		ppbz1 = ppbz.split("*");
+		ppbz1 = ppbz.split("*");
 		scz = Number(scz);
-		
+		if(scz == 0) {
+			scz = '';
+		}
 		var ul = document.getElementsByClassName('mui-table-view');
 		var li = document.createElement("li");
 		li.className = "mui-table-view-cell";
-		
-		
-		if(scz) {
+		if(scz >= ppbz1[0] && scz <= ppbz1[1] && scz != '') {
 			li.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + cdlx + '</div><div id="sc' + bhao + '" class="my_table my_td_width30"><label style = "color :black;">' + scz + '</label></div>';
-		} else {
+		} else if(scz != '' && scz < ppbz1[0] || scz > ppbz1[1]) {
 			hgl1 = hgl1 + 1;
 			hgl5 = hgl5 + 1;
-//						alert(hgl1+"  "+scz);
+			//			alert(hgl1+"  "+scz);
 			li.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + cdlx + '</div><div id="sc' + bhao + '" class="my_table my_td_width30"><label style = "color :red;">' + scz + '</label></div>';
+		} else {
+			li.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + cdlx + '</div><div id="sc' + bhao + '" class="my_table my_td_width30"><label>' + scz + '</label></div>';
 		}
 		ul[0].appendChild(li);
 	};
@@ -468,40 +459,41 @@ mui.plusReady(function() {
 		zhtj.innerHTML = hgl7;
 		li1.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + jcnr + '</div><div class="my_table my_td_width30"><label>' + hgl4 + ' </label></div>';
 		ul1.appendChild(li1);
-//		uploadhgl(hgl7);
+		uploadhgl(hgl7);
 	};
 
 	//上传综合统计合格率
-//	var uploadhgl = function(hgl7) {
-//		mui.ajax(url + 'my_plus/my_scsl_uploadhgl.php', {
-//			data: {
-//				sjc: sjc,
-//				gcmc: gcmc,
-//				xmid: xmid,
-////				gclb: gclb,
-//				hgl: hgl7,
-//				checkId: checkId,
-//				scgg: "实测实量" 
-//			},
-//			dataType: 'json',
-//			type: 'post',
-//			timeout: 10000,
-//			success: function(data) {
-//
-//			},
-//			error: function(xhr, type, errorThrown) {
-//				//异常处理；
-//				return callback('ajax错误' + type + errorThrown);
-//			}
-//		}); 
-//	}
+	var uploadhgl = function(hgl7) {
+		mui.ajax(url + 'my_plus/my_scsl_uploadhgl.php', {
+			data: {
+				sjc: sjc,
+				gcmc: gcmc,
+				xmid: xmid,
+				gclb: gclb,
+				hgl: hgl7,
+				checkId: checkId,
+				scgg: "实测实量"
+			},
+			dataType: 'json',
+			type: 'post',
+			timeout: 10000,
+			success: function(data) {
+
+			},
+			error: function(xhr, type, errorThrown) {
+				//异常处理；
+				return callback('ajax错误' + type + errorThrown);
+			}
+		});
+	}
+
 	//编号设置
 	var createkbcd = function(bhao, pageX, pageY) {
 		var bzcd = document.getElementsByClassName('bzcd');
 		var span = document.createElement("span");
 		span.id = "cd" + bhao;
 		var firstWord = bhao.substr(0, 1);
-//						根据不同的测点类型不同的颜色
+		//				根据不同的测点类型不同的颜色
 		if(firstWord == 'A') {
 			span.className = "mui-badge mui-badge-yellow";
 		} else if(firstWord == 'B') {
@@ -511,54 +503,10 @@ mui.plusReady(function() {
 		} else if(firstWord == 'D') {
 			span.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'E') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'F') {
-			span.className = "mui-badge mui-badge-blue";
-		} else if(firstWord == 'G') {
-			span.className = "mui-badge mui-badge-red";
-		} else if(firstWord == 'H') { 
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'I') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'J') {
-			span.className = "mui-badge mui-badge-blue";
-		} else if(firstWord == 'K') {
-			span.className = "mui-badge mui-badge-red";
-		} else if(firstWord == 'L') {
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'M') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'N') {
-			span.className = "mui-badge mui-badge-blue";
-		} else if(firstWord == 'O') {
-			span.className = "mui-badge mui-badge-red";
-		} else if(firstWord == 'P') {
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'Q') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'R') {
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'S') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'T') {
-			span.className = "mui-badge mui-badge-blue";
-		} else if(firstWord == 'U') {
-			span.className = "mui-badge mui-badge-red";
-		} else if(firstWord == 'V') {
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'W') {
-			span.className = "mui-badge mui-badge-green";
-		} else if(firstWord == 'X') {
-			span.className = "mui-badge mui-badge-red";
-		} else if(firstWord == 'Y') {
-			span.className = "mui-badge mui-badge-purple";
-		} else if(firstWord == 'Z') {
-			span.className = "mui-badge mui-badge-green";
+			span.className = "mui-badge mui-badge-green"
 		}
-//      span.className = "mui-badge mui-badge-green";
 		span.innerText = bhao;
 		bzcd[0].appendChild(span);
-//		alert(bzcd[0].getChildren());
 		if(pageX && pageY) {
 			span.classList.add("myposition");
 			span.style.left = pageX;
@@ -567,115 +515,30 @@ mui.plusReady(function() {
 		window.addEventListener('cdlb', function(event) {
 			span.classList.remove('my_none');
 			var cdfc = event.detail.flag;
-			var cdbh = cdfc.charAt(0);
-			var cdgs = cdfc.charAt(1)+cdfc.charAt(2);
-			if(cdbh == "A") {
+			if(cdfc == "A") {
 				if(firstWord !== "A") {
 					span.classList.add('my_none');
 				}
-			} else if(cdbh == "B") {
+			} else if(cdfc == "B") {
 				if(firstWord !== "B") {
 					span.classList.add('my_none');
 				}
-			} else if(cdbh == "C") {
+			} else if(cdfc == "C") {
 				if(firstWord !== "C") {
 					span.classList.add('my_none');
 				}
-			} else if(cdbh == "D") {
+			} else if(cdfc == "D") {
 				if(firstWord !== "D") {
 					span.classList.add('my_none');
 				}
-			} else if(cdbh == "E") {
+			} else if(cdfc == "E") {
 				if(firstWord !== "E") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "F") {
-				if(firstWord !== "F") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "G") {
-				if(firstWord !== "G") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "H") {
-				if(firstWord !== "H") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "I") {
-				if(firstWord !== "I") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "J") {
-				if(firstWord !== "J") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "K") {
-				if(firstWord !== "K") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "L") {
-				if(firstWord !== "L") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "M") {
-				if(firstWord !== "M") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "N") {
-				if(firstWord !== "N") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "O") {
-				if(firstWord !== "O") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "P") {
-				if(firstWord !== "P") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "Q") {
-				if(firstWord !== "Q") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "R") {
-				if(firstWord !== "R") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "S") {
-				if(firstWord !== "S") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "T") {
-				if(firstWord !== "T") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "U") {
-				if(firstWord !== "U") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "V") {
-				if(firstWord !== "V") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "W") {
-				if(firstWord !== "W") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "X") {
-				if(firstWord !== "X") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "Y") {
-				if(firstWord !== "Y") {
-					span.classList.add('my_none');
-				}
-			} else if(cdbh == "Z") {
-				if(firstWord !== "Z") {
 					span.classList.add('my_none');
 				}
 			}
 		})
-	}; 
+	};
+
 	//测点分层
 	xztp.addEventListener('tap', function() {
 		mui.openWindow({
@@ -687,6 +550,7 @@ mui.plusReady(function() {
 			extras: {
 				name: 'w',
 				xmid: xmid,
+				gclb: gclb,
 				sjc: sjc,
 				checkId: checkId
 			},
@@ -704,7 +568,36 @@ mui.plusReady(function() {
 	ajaxformdata();
 	ajaxscsl();
 	ajaxformdata2();
-//	uploadhgl();
+	uploadhgl();
+	//基本信息保存
+	save.addEventListener('tap', function() {
+		var mydata = {
+			sjc: sjc,
+			mc: mc.value,
+			jcbw: jcbw.value,
+			jcrq: jcrq.value,
+			jcry: jcry.value,
+			sgbz: sgbz.value,
+			zzxm: zzxm.value,
+			lxdh: lxdh.value,
+			sgrq: sgrq.value,
+			gzms: gzms.value
+		};
+		var btnArray = ['是', '否'];
+		mui.confirm('确定修改数据吗？', '实测实量', btnArray, function(e) {
+			if(e.index == 0) {
+				ajaxform(mydata, function(err) {
+					if(err) {
+						plus.nativeUI.toast(err);
+						return;
+					}
+					plus.nativeUI.alert('保存成功');
+				});
+			} else {
+
+			}
+		});
+	});
 
 	//附件查看 (未完成)
 	//	fjck.addEventListener('tap', function() {
@@ -790,16 +683,17 @@ mui.plusReady(function() {
 	mydiv.addEventListener('tap', function(e) {
 		var pageX = e.detail.touches[0].pageX;
 		var pageY = e.detail.touches[0].pageY;
+
 		var pageX1 = parseInt((pageX / screen.width) * 100) + '%';
 		var pageY1 = parseInt((pageY / (mydiv.offsetHeight)) * 100) + '%';
-//						alert(pageX1+"  "+pageY1); 
-		var spanid = "cd"+cdbhao;
-        spanid = document.getElementById(spanid)
+		//				alert(pageX1+"  "+pageY1); 
+		var spanid = "cd" + cdbhao;
+		spanid = document.getElementById(spanid);
 		spanid.classList.add("myposition");
 		spanid.style.left = pageX - 30 + "px";
-		spanid.style.top = pageY - 110 + "px"; 
+		spanid.style.top = pageY - 110 + "px";
 		out.innerHTML = "您在给" + cdbhao + "测点布置。";
-//				alert(cdbhao);
+		//		alert(cdbhao);
 	});
 
 	//实测值输入菜单确定监听
@@ -855,6 +749,7 @@ mui.plusReady(function() {
 			mui.ajax(url + 'my_scsl_xgcd.php', {
 				data: {
 					sjc: sjc,
+					bhao: xbhao,
 					scz: xscz
 				},
 				dataType: 'json',
@@ -885,7 +780,7 @@ mui.plusReady(function() {
 		var span = document.getElementsByClassName('mui-badge ');
 		out.innerHTML = "您点击了【保存布置】，同步云端数据";
 		var btnArray = ['是', '否'];
-		mui.confirm('确定要保存布置吗？', '原始记录', btnArray, function(e) {
+		mui.confirm('确定要保存布置吗？', '实测实量', btnArray, function(e) {
 			if(e.index == 0) {
 				for(var i = 0; i < span.length; i++) {
 					var mbhao = span[i].innerText;
@@ -896,7 +791,7 @@ mui.plusReady(function() {
 					var top1 = top.replace(/[^0-9^.]/ig, "");
 					var pageX1 = parseInt((left1 / screen.width) * 100) + '%';
 					var pageY1 = parseInt((top1 / (mydiv.offsetHeight)) * 100) + '%';
-//										alert(checkId+" "+sjc+" "+left+" "+top); 
+					//					alert(checkId+" "+sjc+" "+left+" "+top+" "+gclb);
 					mui.ajax(url + 'my_plus/save_cdbz.php', {
 						data: {
 							sjc: sjc,
@@ -906,7 +801,7 @@ mui.plusReady(function() {
 							pageX1: pageX1,
 							pageY1: pageY1,
 							checkId: checkId,
-//							gclb: gclb
+							gclb: gclb
 						},
 						dataType: 'json',
 						type: 'post',
@@ -922,7 +817,7 @@ mui.plusReady(function() {
 					});
 				}
 				plus.nativeUI.alert('测点布置保存成功！');
-//				window.location.reload();
+				window.location.reload();
 			} else {
 
 			}
@@ -1169,6 +1064,7 @@ var server = url + "fileupload.php";
 //var server="http://demo.dcloud.net.cn/helloh5/uploader/upload.php";
 var files = [];
 var files_yszp = [];
+
 function upload(lx, clean) {
 	//获取url参数值
 	function geturl(name) {
@@ -1177,15 +1073,15 @@ function upload(lx, clean) {
 		if(r != null) return unescape(r[2]);
 		return null;
 	}
-	var sjc = geturl("timestamp");
+	var sjc = geturl("sjc");
 	var xmid = geturl("gcid");
 	var mc = geturl("mc");
-	var gclb = geturl("gclb"); 
+	var gclb = geturl("gclb");
 	var checkId = geturl("checkId");
 	var sclb;
 	gclb = decodeURI(gclb);
 	mc = decodeURI(mc);
-//				alert(sjc);
+	//			alert(sjc);
 	if(lx == 'yszp') {
 		files = files_yszp;
 	} else {
@@ -1196,7 +1092,7 @@ function upload(lx, clean) {
 		return;
 	}
 	outSet("开始上传：")
-	var wt = plus.nativeUI.showWaiting();//显示系统等待对话框
+	var wt = plus.nativeUI.showWaiting();
 	var task = plus.uploader.createUpload(server, {
 		method: "POST"
 	}, function(t, status) {
@@ -1206,31 +1102,29 @@ function upload(lx, clean) {
 			wt.close();
 			var button_lx = document.getElementById(lx);
 			var button_clean = document.getElementById(clean);
-//			alert("上传成功!"+t.responseText);
-            alert("上传成功!");
+			alert("上传成功!");
 		} else {
 			outLine("上传失败：" + status);
 			wt.close();
 		}
-		window.location.reload();//刷新页面
-	});//新建上传任务
-//				alert(sjc);
-	//添加上传数据 
-//	task.addData("lx", lx);
+		window.location.reload();
+	});
+	//			alert(sjc);
+	task.addData("lx", lx);
 	task.addData("uid", getUid());
 	nub = files.length.toString();
 	task.addData("nub", nub);
 	task.addData("sjc", sjc);
-//	task.addData("xmid", xmid);
-//	task.addData("gclb", gclb);
-//	task.addData("mc", mc);
-//	task.addData("checkId", checkId);
-//	task.addData("sclb", '实测实量');
+	task.addData("xmid", xmid);
+	task.addData("gclb", gclb);
+	task.addData("mc", mc);
+	task.addData("checkId", checkId);
+	task.addData("sclb", '实测实量');
 	for(var i = 0; i < files.length; i++) {
 		var f = files[i];
 		task.addFile(f.path, {
 			key: f.name
-		});//添加上传文件 path为路径
+		});
 	}
 	task.start();
 	files = [];
@@ -1239,4 +1133,4 @@ function upload(lx, clean) {
 // 产生一个随机数
 function getUid() {
 	return Math.floor(Math.random() * 100000000 + 10000000).toString();
-}
+}.
