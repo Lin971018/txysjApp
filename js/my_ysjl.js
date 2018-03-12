@@ -310,7 +310,7 @@ mui.plusReady(function() {
 		if(mydata.sgrq.length < 1) {
 			return callback('施工日期不能为空！');
 		}
-		alert(mydata.mc)
+//		alert(mydata.mc)
 		mui.ajax(url+'my_plus/my_fhys_bj_xie.php',{
 			data:{
 				sjc: mydata.sjc,
@@ -411,7 +411,7 @@ mui.plusReady(function() {
 					createscsl(bhao, cdlx, scz, bz, length, i);
 					createkbcd(bhao, pageX, pageY);
 				}
-								alert(length-1+"  "+hgl1); 
+//								alert(length-1+"  "+hgl1); 
 			},
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
