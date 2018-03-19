@@ -86,15 +86,15 @@
 					<input id="scz" type="text" class="" placeholder="批量增加不可填写该项" readonly="readonly">
 				</div>
 			</form>
-			<form class="mui-input-group">
+			<!--<form class="mui-input-group">
 				<div class="my_style3">
 					<label style="font-size: 0.85em;">说明：</label>
 					<textarea id="sm" class="mui-input-clear" rows="2" placeholder="" readonly="readonly"></textarea>
 				</div>
-			</form>
+			</form>-->
 			<div class="mui-button-row">
 				<button id="no" type="button" class="mui-btn mui-btn-primary">关闭</button>
-				<button id="ok" type="button" class="mui-btn mui-btn-primary">确定</button>
+				<button id="ok" type="button" class="mui-btn mui-btn-primary" onclick="javascript:{this.disabled=true;document.form1.submit();}">确定</button>
 			</div>
 		</div>
 
@@ -322,7 +322,8 @@
 						success: function(data) {
 //							alert(data['sqldata']);//数据库里最大的编号 +1后 作为本次创建的起始编号
 							if(data.result == 'success') {
-								return callback();
+								alert("请稍后...");
+								return callback('');
 							} 
 							else {
 								return callback('服务器返回error');

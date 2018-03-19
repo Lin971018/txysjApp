@@ -116,7 +116,7 @@
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<a id="my_popover" class="mui-icon mui-icon-bars mui-pull-right"></a>
-			<h1 class="mui-title">原始记录</h1>
+			<h1 id="refresh" class="mui-title">原始记录</h1>
 		</header>
 		<div class="mui-content">
 
@@ -132,10 +132,11 @@
 						<a id="a3" class="mui-control-item" href="#item3">
 							实测实量
 						</a>
-						<a id="a" class="mui-control-item" href="#item4">
+						<a id="a" class="mui-control-item" href="#item4" >
 							统计分析
 						</a>
 					</div>
+					
 				</div>
 			</head>
 			<div class="mui-content" id="refreshContainer">
@@ -153,7 +154,7 @@
 							</div>
 							<div class="mui-input-row">
 								<label>检查日期：</label>
-								<input type="text" id="jcrq" placeholder="检查日期">
+								<input type="date" id="jcrq" placeholder="检查日期">
 							</div>
 							<div class="mui-input-row">
 								<label>检查人员：</label>
@@ -175,7 +176,7 @@
 							</div>
 							<div class="mui-input-row">
 								<label>施工日期：</label>
-								<input type="text" id="sgrq" placeholder="施工日期">
+								<input type="date" id="sgrq" placeholder="施工日期">
 							</div>
 						</form>
 						<form class="mui-input-group">
@@ -301,7 +302,8 @@
 
 					</div>
 				</div>
-				<div id="item4" class="mui-control-content">
+				<!--统计分析(待开发)-->
+				<!--<div id="item4" class="mui-control-content">
 					<div id="scroll" class="mui-scroll-wrapper">
 						<div class="mui-scroll">
 							<ul id="tjfx" class="mui-table-view">
@@ -318,7 +320,7 @@
 							</ul>
 						</div>
 					</div>
-				</div>
+				</div>-->
 			</div>
 			<!--实量实测  -->
 		</div>
@@ -332,5 +334,26 @@
 	<script src="../js/service.js"></script>
 	<script src="../js/my_ysjl.js"></script>
 	<!--<script src="../js/setPullToRefresh.js"></script>-->
-
+    <script type="text/javascript">	
+		
+		mui.init({
+//				preloadPages:[
+//				    {
+//				      url:'division_details.html',
+//				      id:'list'
+//				    } 
+//				],
+				gestureConfig:{					
+					longtap: true, //长按默认为false
+					doubletap: true
+				}
+			});
+			mui.plusReady(function(){
+				var	refresh = document.getElementById("refresh");
+			//监听标题栏的双击事件(刷新页面)
+			refresh.addEventListener('doubletap',function () {
+				window.location.reload();
+			});
+			});
+			</script>
 </html>
