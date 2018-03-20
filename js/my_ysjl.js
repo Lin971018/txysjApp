@@ -738,7 +738,7 @@ mui.plusReady(function() {
 	var cdbhao = "";
 	mui('.bzcd').on('tap', 'span', function() {
 		cdbhao = this.innerText;
-		//alert(cdbhao);
+//		alert(cdbhao);
 		out.innerHTML = "您【单击】了测点" + cdbhao + "，可进行测点布置。";
 	});
 	//可供布置的测点监听,双击
@@ -798,7 +798,11 @@ mui.plusReady(function() {
 		spanid.classList.add("myposition");
 		spanid.style.left = pageX - 30 + "px";
 		spanid.style.top = pageY - 110 + "px"; 
-		out.innerHTML = "您在给" + cdbhao + "测点布置。";
+//		out.innerHTML = "您在给" + cdbhao + "测点布置。";
+mui.toast("您在给" + cdbhao + "测点布置。", {
+									duration: 'long',
+									type: 'div'
+								});
 //				alert(cdbhao);
 	});
 
