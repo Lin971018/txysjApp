@@ -76,7 +76,7 @@ mui.plusReady(function() {
 	var qkbz = document.getElementById('qkbz'); //清空布置
 	var bcbz = document.getElementById('bcbz'); //保存布置
 	var out = document.getElementById('out'); //操作
-
+    var jp = document.getElementById("jp");//截屏布点
 	var zhtj = document.getElementById("zhtj");
 	//监听upload_camera,打开原生操作列表
 	var upload_camera = document.getElementById('upload_camera');
@@ -359,9 +359,31 @@ mui.plusReady(function() {
 //						alert(data);
 				var length = data.length;
 				for(var i = 0; i < length - 1; i++) {
-					cdfj = data[i].测点附件;
-					mydiv.style.backgroundImage = "url(" + url + "upload/" + cdfj + ")";
-				}
+					if(i==length-2){
+					cdfj = data[i].测点附件;  
+    					base64url = url+"upload/"+cdfj;
+					    var img = base64url;
+
+                        function getBase64Image(img) {  
+                            var canvas = document.createElement("canvas");  
+                            canvas.width = img.width;  
+                            canvas.height = img.height;  
+                            var ctx = canvas.getContext("2d");  
+                            ctx.drawImage(img, 0, 0, img.width, img.height);  
+                            var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();  
+                            var dataURL = canvas.toDataURL("image/"+ext);  
+                            return dataURL;  
+                        }  
+
+                        var image = new Image();  
+                        image.src = img;  
+                        image.onload = function(){  
+                        var base64 = getBase64Image(image);
+                        mydiv.src = base64; 
+                        } 
+                    }
+                    else continue
+                }   
 			}, 
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
@@ -420,7 +442,6 @@ mui.plusReady(function() {
 			}
 		});
 	};
-
 	//实测实量列表创建函数
 	var createscsl = function(bhao, cdlx, scz, bz, length, i) {
 //		alert(bhao+ "  "+cdlx+ "  "+scz+ "  "+bz+ "  "+length+"  "+i);
@@ -432,7 +453,7 @@ mui.plusReady(function() {
 		if(bz) {
 			var hgl2 = hgl1;
 			hgl4 = ((1 - (hgl2 / hgl3).toFixed(2)) * 100) + '%';
-			createtjfx(bhao, cdlx, hgl4);
+//			createtjfx(bhao, cdlx, hgl4);
 			hgl1 = 0;
 			hgl3 = 0;
 		} else {
@@ -459,17 +480,17 @@ mui.plusReady(function() {
 	};
 
 	//创建统计分析
-	var createtjfx = function(bhao, jcnr, hgl4) {
-		bhao = bhao.substr(0, 1);
-		var zhtj = document.getElementById("zhtj");
-		var ul1 = document.getElementById("tjfx");
-		var li1 = document.createElement("li");
-		li1.className = "mui-table-view-cell";
+//	var createtjfx = function(bhao, jcnr, hgl4) {
+//		bhao = bhao.substr(0, 1);
+//		var zhtj = document.getElementById("zhtj");
+//		var ul1 = document.getElementById("tjfx");
+//		var li1 = document.createElement("li");
+//		li1.className = "mui-table-view-cell";
 //		zhtj.innerHTML = hgl7;
-		li1.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + jcnr + '</div><div class="my_table my_td_width30"><label>' + hgl4 + ' </label></div>';
+//		li1.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + jcnr + '</div><div class="my_table my_td_width30"><label>' + hgl4 + ' </label></div>';
 //		ul1.appendChild(li1);
 //		uploadhgl(hgl7);
-	};
+//	};
 
 	//上传综合统计合格率
 //	var uploadhgl = function(hgl7) {
@@ -497,181 +518,216 @@ mui.plusReady(function() {
 //	}
 	//编号设置
 	var createkbcd = function(bhao, pageX, pageY) {
-		var bzcd = document.getElementsByClassName('bzcd');
-		var span = document.createElement("span");
-		span.id = "cd" + bhao;
+		var bzcd = document.getElementById("cd");
+		var span1 = document.createElement("span");
+		var span2 = document.createElement("span");
+		span1.id = "cd" + bhao;
+		span2.id = "jt" + bhao;
 		var firstWord = bhao.substr(0, 1);
 //						根据不同的测点类型不同的颜色
 		if(firstWord == 'A') {
-			span.className = "mui-badge mui-badge-yellow";
+			span1.className = "mui-badge mui-badge-yellow";
+			span2.className = "mui-badge mui-badge-yellow";
 		} else if(firstWord == 'B') {
-			span.className = "mui-badge mui-badge-blue";
+			span1.className = "mui-badge mui-badge-blue";
+			span2.className = "mui-badge mui-badge-blue";
 		} else if(firstWord == 'C') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'D') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'E') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'F') {
-			span.className = "mui-badge mui-badge-blue";
+			span1.className = "mui-badge mui-badge-blue";
+			span2.className = "mui-badge mui-badge-blue";
 		} else if(firstWord == 'G') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'H') { 
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'I') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'J') {
-			span.className = "mui-badge mui-badge-blue";
+			span1.className = "mui-badge mui-badge-blue";
+			span2.className = "mui-badge mui-badge-blue";
 		} else if(firstWord == 'K') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'L') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'M') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'N') {
-			span.className = "mui-badge mui-badge-blue";
+			span1.className = "mui-badge mui-badge-blue";
+			span2.className = "mui-badge mui-badge-blue";
 		} else if(firstWord == 'O') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'P') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'Q') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'R') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'S') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'T') {
-			span.className = "mui-badge mui-badge-blue";
+			span1.className = "mui-badge mui-badge-blue";
+			span2.className = "mui-badge mui-badge-blue";
 		} else if(firstWord == 'U') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'V') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'W') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		} else if(firstWord == 'X') {
-			span.className = "mui-badge mui-badge-red";
+			span1.className = "mui-badge mui-badge-red";
+			span2.className = "mui-badge mui-badge-red";
 		} else if(firstWord == 'Y') {
-			span.className = "mui-badge mui-badge-purple";
+			span1.className = "mui-badge mui-badge-purple";
+			span2.className = "mui-badge mui-badge-purple";
 		} else if(firstWord == 'Z') {
-			span.className = "mui-badge mui-badge-green";
+			span1.className = "mui-badge mui-badge-green";
+			span2.className = "mui-badge mui-badge-green";
 		}
-//      span.className = "mui-badge mui-badge-green";
-		span.innerText = bhao;
-		bzcd[0].appendChild(span);
-//		alert(bzcd[0].getChildren());
+		span1.innerText = bhao;
+		span2.innerText = bhao;
+		span2.classList.add('my_none');
+		bzcd.appendChild(span1);
+		jp.appendChild(span2);
+//		alert(mydiv.lastChild);
+//		alert(bzcd.getChildren());
 		if(pageX && pageY) {
-			span.classList.add("myposition");
-			span.style.left = pageX;
-			span.style.top = pageY;
+			span1.classList.add("myposition");
+			span1.style.left = pageX;
+			span1.style.top = pageY;
+			span2.classList.add("myposition");
+			span2.style.left = pageX;
+			span2.style.top = pageY;
+			span2.classList.remove('my_none');
 		}
 		window.addEventListener('cdlb', function(event) {
-			span.classList.remove('my_none');
+			span1.classList.remove('my_none');
 			var cdfc = event.detail.flag;
 			var cdbh = cdfc.charAt(0);
 			var cdgs = cdfc.charAt(1)+cdfc.charAt(2);
 			if(cdbh == "A") {
 				if(firstWord !== "A") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "B") {
 				if(firstWord !== "B") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "C") {
 				if(firstWord !== "C") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "D") {
 				if(firstWord !== "D") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "E") {
 				if(firstWord !== "E") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "F") {
 				if(firstWord !== "F") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "G") {
 				if(firstWord !== "G") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "H") {
 				if(firstWord !== "H") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "I") {
 				if(firstWord !== "I") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "J") {
 				if(firstWord !== "J") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "K") {
 				if(firstWord !== "K") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "L") {
 				if(firstWord !== "L") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "M") {
 				if(firstWord !== "M") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "N") {
 				if(firstWord !== "N") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "O") {
 				if(firstWord !== "O") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "P") {
 				if(firstWord !== "P") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "Q") {
 				if(firstWord !== "Q") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "R") {
 				if(firstWord !== "R") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "S") {
 				if(firstWord !== "S") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "T") {
 				if(firstWord !== "T") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "U") {
 				if(firstWord !== "U") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "V") {
 				if(firstWord !== "V") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "W") {
 				if(firstWord !== "W") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "X") {
 				if(firstWord !== "X") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "Y") {
 				if(firstWord !== "Y") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			} else if(cdbh == "Z") {
 				if(firstWord !== "Z") {
-					span.classList.add('my_none');
+					span1.classList.add('my_none');
 				}
 			}
 		})
@@ -738,12 +794,12 @@ mui.plusReady(function() {
 	var cdbhao = "";
 	mui('.bzcd').on('tap', 'span', function() {
 		cdbhao = this.innerText;
-//		alert(cdbhao);
+		//alert(cdbhao);
 		out.innerHTML = "您【单击】了测点" + cdbhao + "，可进行测点布置。";
-		mui.toast("您【单击】了测点" + cdbhao + "，可进行测点布置。", {
-									duration: 'long',
-									type: 'div'
-								});
+		mui.toast("您【单击】了测点" + cdbhao + "，可进行测点布置。",{
+			duration: 'long',
+			type: 'div'
+		});	
 	});
 	//可供布置的测点监听,双击
 	mui('.bzcd').on('doubletap', 'span', function() {
@@ -751,10 +807,6 @@ mui.plusReady(function() {
 		var sjbhao = this.innerText;
 		kbbhao.value = sjbhao;
 		out.innerHTML = "您【双击】了测点" + cdbhao + "，可修改测点基本信息。";
-//		mui.toast("您【双击】了测点" + cdbhao + "，可修改测点基本信息。", {
-//									duration: 'long',
-//									type: 'div'
-//								});
 		mui.ajax(url + 'my_cdbu_du.php', {
 			data: {
 				sjc: sjc,
@@ -796,19 +848,26 @@ mui.plusReady(function() {
 
 	//平面图监听
 	mydiv.addEventListener('tap', function(e) {
+		if(cdbhao){
 		var pageX = e.detail.touches[0].pageX;
 		var pageY = e.detail.touches[0].pageY;
 		var pageX1 = parseInt((pageX / screen.width) * 100) + '%';
 		var pageY1 = parseInt((pageY / (mydiv.offsetHeight)) * 100) + '%';
 //						alert(pageX1+"  "+pageY1); 
-		var spanid = "cd"+cdbhao;
-        spanid = document.getElementById(spanid)
-		spanid.classList.add("myposition");
-		spanid.style.left = pageX - 30 + "px";
-		spanid.style.top = pageY - 110 + "px"; 
+		var spanid1 = "cd"+cdbhao;
+		var spanid2 = "jt"+cdbhao;
+        spanid1 = document.getElementById(spanid1);
+		spanid1.classList.add("myposition");
+		spanid1.style.left = pageX - 30 + "px";
+		spanid1.style.top = pageY - 110 + "px";
+		spanid2 = document.getElementById(spanid2)
+		spanid2.classList.add("myposition");
+		spanid2.style.left = pageX - 30 + "px";
+		spanid2.style.top = pageY - 110 + "px";
+		spanid2.classList.remove('my_none');
 		out.innerHTML = "您在给" + cdbhao + "测点布置。";
-
 //				alert(cdbhao);
+        }
 	});
 
 	//实测值输入菜单确定监听
@@ -891,7 +950,7 @@ mui.plusReady(function() {
 	});
 	//保存布置的监听				
 	bcbz.addEventListener('tap', function() {
-		var span = document.getElementsByClassName('mui-badge ');
+		var span = document.getElementById("cd").getElementsByTagName("span");
 		out.innerHTML = "您点击了【保存布置】，同步云端数据";
 		var btnArray = ['是', '否'];
 		mui.confirm('确定要保存布置吗？', '原始记录', btnArray, function(e) {
@@ -939,15 +998,20 @@ mui.plusReady(function() {
 	});
 	//清空布置
 	qkbz.addEventListener('tap', function() {
-		var span = document.getElementsByClassName('mui-badge ');
+		var span1 = document.getElementById("cd").getElementsByTagName("span");
+		var span2 = jp.getElementsByTagName("span");
 		out.innerHTML = "您点击了【清空布置】，保存后，同步云端数据。";
 		var btnArray = ['是', '否'];
 		mui.confirm('确定要清空布置吗？', '实测实量', btnArray, function(e) {
 			if(e.index == 0) {
-				for(var i = 0; i < span.length; i++) {
-					span[i].classList.remove("myposition");
-					span[i].style.left = "";
-					span[i].style.top = "";
+				for(var i = 0; i < span1.length; i++) {
+					span1[i].classList.remove("myposition");
+					span1[i].style.left = "";
+					span1[i].style.top = "";
+					span2[i].classList.remove("myposition");
+					span2[i].style.left = "";
+					span2[i].style.top = "";
+					span2[i].classList.add('my_none');
 				}
 			} else {}
 		});

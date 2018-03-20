@@ -64,8 +64,8 @@
 			}
 			
 			#mydiv {
-				width: 315px;
-				height: 420px;
+				width: 360px;
+				height: 450px;
 				margin: auto;
 				border: 1px #C6C6C6 solid;
 				background-size: 100% 100%;
@@ -77,7 +77,7 @@
 				padding-bottom: 10px;
 				height: auto;
 				min-height: 80px;
-				border: 0px #C6C6C6 solid;
+				border: 1px #C6C6C6 solid;
 			}
 			
 			.jobDescription {
@@ -108,6 +108,10 @@
 				min-height: 60px;
 				border: 1px #C6C6C6 solid;
 			}
+			.span{
+				left: 90px;
+				top: 119px;
+			}
 		</style>
 
 	</head>
@@ -126,17 +130,16 @@
 						<a id="a1" class="mui-control-item  mui-active" href="#item1">
 							基本信息
 						</a>
-						<a id="a2" class="mui-control-item " href="#item2">
+						<a id="a2" class="mui-control-item" href="#item2">
 							测点布置
 						</a>
 						<a id="a3" class="mui-control-item" href="#item3">
 							实测实量
 						</a>
-						<a id="a" class="mui-control-item" href="#item4" >
+						<a id="a" class="mui-control-item" href="#item4" disabled="disabled">
 							统计分析
 						</a>
 					</div>
-					
 				</div>
 			</head>
 			<div class="mui-content" id="refreshContainer">
@@ -184,7 +187,7 @@
 								<p>工作描述：</p>
 								<input type="text" id="gzms" value="" placeholder="工作描述">
 							</div>
-							<div class="mui-button-row my_margintop10px">
+							<div class="mui-button-row my_ margintop10px">
 								<!--<button id="fjck" type="button" class="mui-btn mui-btn-primary">附件查看</button>-->
 								<button id="fjscxg" type="button" class="mui-btn mui-btn-primary">附件上传/修改</button>
 								<button id="save" type="button" class="mui-btn mui-btn-primary">保存</button>
@@ -218,11 +221,12 @@
 					<div class="mui-content">
 						<div id="scroll" class="mui-scroll-wrapper">
 							<div class="mui-scroll">
-								<div id="mydiv">
-									<div class="bzcd">
-									<!--<p>可供布置的测点：</p>-->
-								</div></div>
-								
+								    <div id="jp">
+								        <img id="mydiv"></img>
+								    </div>
+								    <div class="bzcd" id="cd">
+									<p>可供布置的测点：</p>
+								    </div>
 								<div class="mui-button-row">
 									<button id="xztp" type="button" class="mui-btn mui-btn-primary">选择测点分层</button>
 									<button id="qkbz" type="button" class="mui-btn mui-btn-primary">清空布置</button>
@@ -334,9 +338,46 @@
 	<script src="../js/immersed.js"></script>
 	<script src="../js/service.js"></script>
 	<script src="../js/my_ysjl.js"></script>
+	<script src="../js/html2canvas.js"></script>  
+    <script src="../js/canvas2image.js"></script>
 	<!--<script src="../js/setPullToRefresh.js"></script>-->
     <script type="text/javascript">	
-		
+    	var mydiv = document.getElementById("mydiv");	
+        var refresh = document.getElementById("refresh");
+        var imgjpeg;
+        refresh.addEventListener("tap",function(){
+        	html2canvas(jp, { 
+                        onrendered: function(canvas) {
+	                                    imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
+	                                    mydiv.src = imgjpeg.src;
+                                    }
+                        });
+                    });
+        mydiv.addEventListener('longtap',function(){
+//      	alert(2);
+           var a = [
+            {title:"分享"}
+            ];
+        	plus.nativeUI.actionSheet({
+        		title :"操作",
+        		cancel :"取消",
+        		buttons	: a
+        	},function(e){
+        		var index = e.index;
+        		switch(index){
+        			case 0: 
+        			break;
+        			case 1:
+                    html2canvas(jp, { 
+                        onrendered: function(canvas) {
+	                                    imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
+	                                    mydiv.src = imgjpeg.src;
+                                    }
+                       });             
+                         break;
+        		}
+        	})
+        });
 		mui.init({
 //				preloadPages:[
 //				    {
