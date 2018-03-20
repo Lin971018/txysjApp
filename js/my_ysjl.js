@@ -465,9 +465,9 @@ mui.plusReady(function() {
 		var ul1 = document.getElementById("tjfx");
 		var li1 = document.createElement("li");
 		li1.className = "mui-table-view-cell";
-		zhtj.innerHTML = hgl7;
+//		zhtj.innerHTML = hgl7;
 		li1.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + jcnr + '</div><div class="my_table my_td_width30"><label>' + hgl4 + ' </label></div>';
-		ul1.appendChild(li1);
+//		ul1.appendChild(li1);
 //		uploadhgl(hgl7);
 	};
 
@@ -740,6 +740,10 @@ mui.plusReady(function() {
 		cdbhao = this.innerText;
 //		alert(cdbhao);
 		out.innerHTML = "您【单击】了测点" + cdbhao + "，可进行测点布置。";
+		mui.toast("您【单击】了测点" + cdbhao + "，可进行测点布置。", {
+									duration: 'long',
+									type: 'div'
+								});
 	});
 	//可供布置的测点监听,双击
 	mui('.bzcd').on('doubletap', 'span', function() {
@@ -747,6 +751,10 @@ mui.plusReady(function() {
 		var sjbhao = this.innerText;
 		kbbhao.value = sjbhao;
 		out.innerHTML = "您【双击】了测点" + cdbhao + "，可修改测点基本信息。";
+//		mui.toast("您【双击】了测点" + cdbhao + "，可修改测点基本信息。", {
+//									duration: 'long',
+//									type: 'div'
+//								});
 		mui.ajax(url + 'my_cdbu_du.php', {
 			data: {
 				sjc: sjc,
@@ -798,11 +806,8 @@ mui.plusReady(function() {
 		spanid.classList.add("myposition");
 		spanid.style.left = pageX - 30 + "px";
 		spanid.style.top = pageY - 110 + "px"; 
-//		out.innerHTML = "您在给" + cdbhao + "测点布置。";
-mui.toast("您在给" + cdbhao + "测点布置。", {
-									duration: 'long',
-									type: 'div'
-								});
+		out.innerHTML = "您在给" + cdbhao + "测点布置。";
+
 //				alert(cdbhao);
 	});
 
