@@ -442,6 +442,7 @@ mui.plusReady(function() {
 			}
 		});
 	};
+
 	//实测实量列表创建函数
 	var createscsl = function(bhao, cdlx, scz, bz, length, i) {
 //		alert(bhao+ "  "+cdlx+ "  "+scz+ "  "+bz+ "  "+length+"  "+i);
@@ -489,7 +490,7 @@ mui.plusReady(function() {
 //		zhtj.innerHTML = hgl7;
 //		li1.innerHTML = '<div class="my_table my_td_width30">' + bhao + '</div><div class="my_table my_td_width40">' + jcnr + '</div><div class="my_table my_td_width30"><label>' + hgl4 + ' </label></div>';
 //		ul1.appendChild(li1);
-//		uploadhgl(hgl7);
+////		uploadhgl(hgl7);
 //	};
 
 	//上传综合统计合格率
@@ -604,13 +605,14 @@ mui.plusReady(function() {
 			span1.className = "mui-badge mui-badge-green";
 			span2.className = "mui-badge mui-badge-green";
 		}
-		span1.innerText = bhao;
+        span1.innerText = bhao;
 		span2.innerText = bhao;
 		span2.classList.add('my_none');
 		bzcd.appendChild(span1);
 		jp.appendChild(span2);
 //		alert(mydiv.lastChild);
 //		alert(bzcd.getChildren());
+
 		if(pageX && pageY) {
 			span1.classList.add("myposition");
 			span1.style.left = pageX;
@@ -795,11 +797,11 @@ mui.plusReady(function() {
 	mui('.bzcd').on('tap', 'span', function() {
 		cdbhao = this.innerText;
 		//alert(cdbhao);
-		out.innerHTML = "您【单击】了测点" + cdbhao + "，可进行测点布置。";
-		mui.toast("您【单击】了测点" + cdbhao + "，可进行测点布置。",{
-			duration: 'long',
-			type: 'div'
-		});	
+//		out.innerHTML = "您【单击】了测点" + cdbhao + "，可进行测点布置。";
+		mui.toast("您在给" + cdbhao + "测点布置。", {
+									duration: 'long',
+									type: 'div'
+								});
 	});
 	//可供布置的测点监听,双击
 	mui('.bzcd').on('doubletap', 'span', function() {
@@ -847,8 +849,7 @@ mui.plusReady(function() {
 	});
 
 	//平面图监听
-	mydiv.addEventListener('tap', function(e) {
-		if(cdbhao){
+	mydiv.addEventListener('tap', function(e) {if(cdbhao){
 		var pageX = e.detail.touches[0].pageX;
 		var pageY = e.detail.touches[0].pageY;
 		var pageX1 = parseInt((pageX / screen.width) * 100) + '%';
@@ -866,9 +867,9 @@ mui.plusReady(function() {
 		spanid2.style.top = pageY - 110 + "px";
 		spanid2.classList.remove('my_none');
 		out.innerHTML = "您在给" + cdbhao + "测点布置。";
+
 //				alert(cdbhao);
-        }
-	});
+        }});
 
 	//实测值输入菜单确定监听
 	scqding.addEventListener('tap', function() {
