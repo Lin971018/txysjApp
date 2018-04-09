@@ -59,15 +59,15 @@
 	<script src="../js/service.js" ></script>	
 	<script>
 		mui.init();
-		
+	
 		mui.plusReady(function() {
 			//获取传值
 			var self = plus.webview.currentWebview();			
-			var zlzslx= self.sjzslx;
+			var zlzslx= self.zlkmc;
 			var mobile = self.mobile;
 			var uid = self.uid;
 			zlzslx=decodeURI(zlzslx);
-			
+//			alert(zlzslx);
 			var doc=document;
 			var h1=doc.getElementsByTagName("h1");
 			h1[0].innerText=zlzslx;

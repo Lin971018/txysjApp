@@ -178,8 +178,9 @@
 							//							alert(data);
 
 							mui.openWindow({
-								url: "my_project_ysjl_add.html",
+								url: "my_project_ysjl_list.html",
 								extras: {
+									zlkmc: zlkmc,
 									mobile: mobile,
 									uid: uid
 								},
@@ -205,7 +206,7 @@
 					//汉字编码，为了get传值
 					var Name = encodeURI(encodeURI(bgmc));
 					var CityName = encodeURI(encodeURI(bgmc));
-					//			alert(CityName);
+//								alert(CityName);
 					var ysbwa = '验收部位：';
 					var ysrqa = '验收日期：';
 					var gongcheng = document.getElementById("gongcheng");
