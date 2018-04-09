@@ -3,7 +3,7 @@
 	"id": "H5E321129",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "建筑行业资料送检",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "2017.04.22",/*应用版本名称*/
+		"name": "2018.04.07",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -102,7 +102,7 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        },"Push":{},"Share":{}
+        },"Push":{},"Share":{},"OAuth":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -189,7 +189,7 @@
 					"xxhdpi": "unpackage/res/welcome/1080-1882.png"
 				}
 			},"debug":true
-		}
+		},"ads":{"rp":false,"splash":false,"push":false},"adid":""
 	},
 	"dependencies": {
 		"pages": {
@@ -202,7 +202,8 @@
 					"js/my_js_index.js",
 					"css/my_css.css",
 					"css/iconfont.css",
-					"js/service.js"
+					"js/service.js",
+					"fonts/iconfont.ttf"
 				],
 				"refer": [
 					"knowledge.html",
@@ -252,7 +253,8 @@
 					"images/shuijiao.jpg",
 					"js/my_js_nextpage.js",
 					"images/xzmc.png",
-					"js/service.js"
+					"js/service.js",
+					"js/setPullToRefresh.js"
 				],
 				"refer": [
 					"team_plus/team_in.html"
@@ -290,7 +292,8 @@
 					"js/service.js",
 					"css/iconfont.css",
 					"css/mui.min.css",
-					"images/jdjg.png"
+					"images/jdjg.png",
+					"js/setPullToRefresh.js"
 				],
 				"refer": [
 					"knowledge_plus/knowledge_list.html"
@@ -326,7 +329,8 @@
 					"my_plus/my_project_wdcx.html",
 					"my_plus/my_project_sjcx.html",
 					"my_plus/my_project_bwjd.html",
-					"my_plus/my_project_ysjl.html"
+					"my_plus/my_project_ysjl.html",
+					"my_plus/my_project_sjjg.html"
 				],
 				"priority": 0
 			},
@@ -477,7 +481,9 @@
 					"js/mui.min.js",
 					"js/common.js",
 					"css/common.css",
-					"js/immersed.js"
+					"js/immersed.js",
+					"js/setPullToRefresh.js",
+					"js/service.js"
 				],
 				"refer": [],
 				"priority": 0
@@ -586,7 +592,8 @@
 					"js/common.js",
 					"js/immersed.js",
 					"css/my_project_fhys_xz.css",
-					"my_plus/my_wdrw.html"
+					"my_plus/my_wdrw.html",
+					"css/mui.min.css"
 				],
 				"refer": [
 					"team_plus/team_readimage.html"
@@ -852,22 +859,38 @@
 					"css/my_css.css",
 					"fonts/mui.ttf",
 					"css/mui.min.css",
-					"my_plus/my_project_scsl_scsl.html"
+					"my_plus/my_project_scsl_scsl.html",
+					"my_plus/my_project_ysjl_ysjl.html",
+					"css/iconfont.css",
+					"images/jdjg.png"
 				],
 				"refer": [
-					"my_plus/my_project_ysjl_add.html"
+					"my_plus/my_project_ysjl_add.html",
+					"my_plus/my_project_ysjl_kpfl.html"
 				],
 				"priority": 0
 			},
 			"my_plus/my_project_ysjl_list.html": {
-				"resources": [],
+				"resources": [
+					"css/mui.min.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
 				"refer": [
 					"my_plus/my_project_add.html"
 				],
 				"priority": 0
 			},
 			"my_plus/my_project_ysjl_add.html": {
-				"resources": [],
+				"resources": [
+					"css/iconfont.css",
+					"images/jdjg.png",
+					"css/mui.min.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
 				"refer": [
 					"my_plus/my_project_ysjl_list.html"
 				],
@@ -875,7 +898,12 @@
 			},
 			"my_plus/my_project_add.html": {
 				"resources": [
-					"css/my_project_fhys_xz.css"
+					"css/my_project_fhys_xz.css",
+					"css/mui.min.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf"
 				],
 				"refer": [],
 				"priority": 0
@@ -884,6 +912,105 @@
 				"resources": [
 					"js/common.js",
 					"my_plus/my_project_ysjl.html",
+					"js/immersed.js",
+					"js/my_scsl.js",
+					"css/my_project_fhys_xz.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl_ysjl.html": {
+				"resources": [
+					"js/common.js",
+					"js/my_ysjl.js",
+					"js/immersed.js",
+					"css/my_project_fhys_xz.css",
+					"css/mui.min.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"my_plus/my_project_ysjl.html",
+					"js/my_ysjl2.js",
+					"js/canvas2image.js",
+					"my_plus/my_project_ysjl_kpfl.html",
+					"js/html2canvas.js",
+					"js/share.js"
+				],
+				"refer": [
+					"my_plus/my_project_ysjl_xzcd.html",
+					"my_plus/my_project_cdfc.html",
+					"my_plus/camera_image.html",
+					"my_plus/share.html",
+					"my_plus/my_project_ysjl_yjsr.html"
+				],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl_xzcd.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/my_project_fhys_xz.css",
+					"css/my_css.css",
+					"js/service.js",
+					"js/mui.min.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_cdfc.html": {
+				"resources": [
+					"css/mui.min.css",
+					"css/my_css.css",
+					"css/my_project_fhys_xz.css",
+					"js/service.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_sjjg.html": {
+				"resources": [
+					"js/service.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"knowledge_plus/knowledge_list_nr.html": {
+				"resources": [
+					"js/setPullToRefresh.js"
+				],
+				"refer": [],
+				"priority": 0
+			},
+			"my_plus/my_project_ysjl_kpfl.html": {
+				"resources": [
+					"js/service.js",
+					"js/my_project_list_search.js",
+					"js/mui.min.js",
+					"css/my_css.css",
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"my_plus/my_project_ysjl_ysjl.html"
+				],
+				"refer": [
+					"my_plus/my_project_ysjl_add.html"
+				],
+				"priority": 0
+			},
+			"my_plus/share.html": {
+				"resources": [
+					"css/common.css",
+					"js/common.js",
 					"js/immersed.js"
 				],
 				"refer": [],

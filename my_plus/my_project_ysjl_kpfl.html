@@ -62,7 +62,7 @@
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 			<a id="my_popover" class="mui-icon mui-icon-search mui-pull-right"></a>
 			<!--<a id="info" class="mui-icon mui-icon-plus mui-pull-right" style="color: #999;"></a>-->
-			<h1 id="refresh" class="mui-title">我的工程</h1>
+			<h1 id="refresh" class="mui-title">我的卡片</h1>
 		</header>
 		<div>
 			<button id="addNew" class="mui-btn mui-fab mui-btn-mini mui-btn-danger">
@@ -370,7 +370,6 @@
 				var wdh = document.getElementById('wdh');
 				var jisuan = document.getElementById('jisuan');
 				var kbgbi = document.getElementById('kbgbi');
-
 				//异步传值,获取卡项的数据
 				mui.ajax(url + 'my_plus/my_project_list.php', {
 					data: {
@@ -382,7 +381,7 @@
 					timeout: 10000,
 					success: function(data) {
 						//				alert(data[0].id+"ppppp");
-//						              alert(zlkmc)
+//						              alert(kpzt)
 						var length = data.length;
 						if(length > 1) {
 							for(var i = 0; i < length - 1; i++) {

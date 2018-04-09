@@ -75,6 +75,7 @@
 				var k = new Array(); //测点编号和测点个数数组
 				var lx;
 				var j = 0;
+				var pdbh;//判断是否同类型不同编号
 				//创建测点类别
 				var cdlx = function() {
 					var cdlb = document.getElementById("cdlb");
@@ -97,26 +98,18 @@
 						var length = data.length; //数据返回的形式是数组，在这里先判断数组的长度
 						if(length > 0) {
 							for(var i = 0; i < length - 1; i++) {
-								if(jcnr==data[i].测点类型){
+								if(jcnr == data[i].测点类型&&pdbh == data[i].测点编号){
 									continue;
 								}
 								else{
-//									if(data[i].测点类型==undefined){
-//										jcnr = "无"
-//										k[j] = data[i].测点编号+data[i].测点个数;
-//										j++;
-//								        cdlx(); 
-//								        alert(data[i].测点类型)
-//									}
-//									else{
-								    jcnr = data[i].测点类型; 
+								    pdbh = data[i].测点编号;
+								    jcnr = data[i].测点类型;
 								    k[j] = data[i].测点编号+data[i].测点个数;
 //								    alert(k[j]);  
 								    j++;
 								    cdlx(); 
-//								   }
 								} 
-							}
+							};
 						} else {
 
 						}
@@ -140,82 +133,7 @@
 						} else {
 
 						}
-					}
-//					if(gclb == "混凝土结构工程") {
-//						if(s == "截面尺寸") {
-//							lx = "A";
-//						}
-//						else if(s == "墙表面平整度") {
-//							lx = "B";
-//						}
-//						else if(s == "垂直度（抹灰）") {
-//							lx = "C";
-//						}
-//						else if(s == "垂直度（免抹灰）") {
-//							lx = "D";
-//						}
-//						else if(s == "顶板水平度") {
-//							lx = "E";
-//						}
-//						else if(s == "栏杆、楼板厚度") {
-//							lx = "F";
-//						} else {
-//
-//						}
-//					} else if(gclb == "砌筑工程") {
-//						if(s == "表面平整度") {
-//							lx = "A";
-//						}
-//						else if(s == "垂直度") {
-//							lx = "B";
-//						}
-//						else if(s == "外窗洞口尺寸") {
-//							lx = "C";
-//						} else {
-//
-//						}
-//					} else if(gclb == "抹灰工程") {
-//						if(s == "墙面表面平整度") {
-//							lx = "A";
-//						}
-//						else if(s == "墙面垂直度") {
-//							lx = "B";
-//						}
-//						else if(s == "阴阳角方正") {
-//							lx = "C";
-//						}
-//						else if(s == "方正性") {
-//							lx = "D";
-//						}
-//						else if(s == "地面表面平整") {
-//							lx = "E";
-//						}
-//						else if(s == "门洞尺寸偏差(1)") {
-//							lx = "F";
-//						}
-//						else if(s == "门洞尺寸偏差(2)") {
-//							lx = "G";
-//						}
-//						else if(s == "门洞尺寸偏差(3)") {
-//							lx = "H";
-//						}
-//						else if(s == "外窗内侧墙体厚度极差") {
-//							lx = "I";
-//						}
-//						else if(s == "厨卫间开间/进深偏差") {
-//							lx = "J";
-//						} else {
-//
-//						}
-//					} else if(gclb == "设备安装工程") {
-//						if(s == "座便坑距偏差") {
-//							lx = "A";
-//						} else {
-//
-//						}
-//					} else {
-//
-//					}
+					}				
 				}
 
 				//完成按钮监听

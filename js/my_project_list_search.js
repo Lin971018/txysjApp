@@ -28,32 +28,7 @@ mui.plusReady(function(){
 			}
 		},"测试","内容",bts);
 		
-//		//遮罩效果
-//		ws=null;
-//		ws=plus.webview.currentWebview();
-//		// 显示遮罩层
-//		ws.setStyle({mask:"rgba(0,0,0,0.7)"});
-//		mui.openWindow({
-//			url:'my_project_list_search_name.html',
-//			id:'my_project_list_search_name.html',								
-//			styles:{
-//				width:'80%',
-//				height:'60%',	
-//				margin:'auto',
-//				hardwareAccelerated:false
-//			},
-//			extras:{
-//				name:'lidegejing'
-//			},
-//			show:{
-//				autoShow:true,//页面loaded事件发生后自动显示
-//				aniShow:'slide-in-right',//页面显示动画
-//				duration:'100'//页面动画持续时间
-//			},
-//			waiting:{
-//				autoShow:false,//自动显示等待框	
-//			}							 
-//		});	
+
 	});
 	
 	//动态创建函数

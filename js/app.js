@@ -38,7 +38,7 @@
 			error:function(xhr,type,errorThrown){
 				//异常处理；
 				//alert('ajax错误'+type+errorThrown);
-				return callback('ajax错误'+type+errorThrown);
+				return callback('ajax错误1'+type+errorThrown);
 			}
 		});
 	};

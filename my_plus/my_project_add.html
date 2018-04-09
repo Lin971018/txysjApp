@@ -48,19 +48,20 @@
 			</form>
 			<div id="formbtn" class="mui-button-row">
 				<button type="button" class="mui-btn mui-btn-primary mui-action-back" id="data_close">关闭</button>
-				<button type="button" class="mui-btn mui-btn-primary" id="data_save" onclick="javascript:{this.disabled=true;document.form1.submit();}">保存</button>
+				<!--<button type="button" class="mui-btn mui-btn-primary" id="data_save" onclick="javascript:{this.disabled=true;document.form1.submit();}">保存</button>-->
+				<button type="button" class="mui-btn mui-btn-primary" id="data_save" >保存</button>
 			</div>
 		</div>
 		<script src="../js/mui.min.js"></script>
 		<script src="../js/service.js"></script>
 		<script type="text/javascript">
 			//防止重复点击保存按钮
-			//          function fncSubmit(){  
-			//          setTimeout(function(){  
-			//              alert('保存新增卡片');  
-			//          },1000);  
-			//          this.disabled = true; 
-			//          }   
+			          function fncSubmit(){  
+			          setTimeout(function(){  
+			              alert('保存新增卡片');  
+			          },1000);  
+			          this.disabled = true; 
+			          }   
 			document.getElementById('data_save');
 
 			mui.init()

@@ -315,6 +315,7 @@
 						<div class="mui-button-row my_margintop10px">
 							<button id="scgbi" type="button" class="mui-btn mui-btn-primary">关闭</button>
 							<button id="scqding" type="button" class="mui-btn mui-btn-primary">确定</button>
+							<button id="plsr" type="button" class="mui-btn mui-btn-primary">批量</button>
 						</div>
 
 					</div>
@@ -350,28 +351,20 @@
 	<script src="../js/immersed.js"></script>
 	<script src="../js/service.js"></script>
 	<script src="../js/my_ysjl.js"></script>
-		<script src="../js/html2canvas.js"></script>  
-    <script src="../js/canvas2image.js"></script>
+	<script src="../js/html2canvas.js"></script>  
+    <script src="../js/canvas2image.js"></script> 
+    <script src="../js/share.js"></script>
 	<!--<script src="../js/setPullToRefresh.js"></script>-->
     <script type="text/javascript">	
 		var mydiv = document.getElementById("mydiv");	
-        var refresh = document.getElementById("refresh");
-        var imgjpeg;
-        refresh.addEventListener("tap",function(){
-        	html2canvas(jp, { 
-                        onrendered: function(canvas) {
-	                                    imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
-	                                    mydiv.src = imgjpeg.src;
-                                    }
-                        });
-                    });
+        var img;
+        
+        //长按保存截图并分享到微信
         mydiv.addEventListener('longtap',function(){
-//      	alert(2);
            var a = [
             {title:"分享"}
             ];
         	plus.nativeUI.actionSheet({
-        		title :"操作",
         		cancel :"取消",
         		buttons	: a
         	},function(e){
@@ -380,13 +373,33 @@
         			case 0: 
         			break;
         			case 1:
-                    html2canvas(jp, { 
+                   //截图
+                   html2canvas(jp, {
                         onrendered: function(canvas) {
-	                                    imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
-	                                    mydiv.src = imgjpeg.src;
+	                                var imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
+	                                    img = imgjpeg.src;
                                     }
-                       });             
-                         break;
+                     });
+                     //将base64转换为jpg格式保存在upload
+                    setTimeout(function(){
+                    	 mui.ajax(url+'my_plus/my_project_base64.php',{
+                     	data:{
+                     		img:img
+                     	},
+                     	dataType:'json',
+                     	type:'post',
+                     	timeout:1000,
+                     	success:function(data){
+                     		shareimg(window,url+data.result);//分享到微信
+                     	},
+                     	error: function(xhr, type, errorThrown) {
+				        //异常处理；
+//				        alert('ajax错误'+type); 
+				        return callback('ajax错误' + type + errorThrown);
+			           }
+                     })
+                    },500);
+                        break;
         		}
         	})
         });
@@ -409,5 +422,5 @@
 				window.location.reload();
 			});
 			});
-			</script>
+		</script>
 </html>

@@ -94,7 +94,7 @@
 			</form>-->
 			<div class="mui-button-row">
 				<button id="no" type="button" class="mui-btn mui-btn-primary">关闭</button>
-				<button id="ok" type="button" class="mui-btn mui-btn-primary" onclick="javascript:{this.disabled=true;document.form1.submit();}">确定</button>
+				<button id="ok" type="button" class="mui-btn mui-btn-primary">确定</button>
 			</div>
 		</div>
 
@@ -269,6 +269,7 @@
              })
 				ok.addEventListener('tap', function() {
 //					alert(sjc) 
+document.getElementById("ok").disabled=true;
 					var mydata = {
 						sjc: sjc,
 						cdgs: cdgs.value,
