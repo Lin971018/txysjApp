@@ -27,7 +27,7 @@ mui.plusReady(function() {
 		return null;
 	}
 	var xmid = geturl("id");
-	//	var gclb = geturl("gclb");
+	var CityName = geturl("CityName");
 	var mc = geturl("mc");
 	var sjc = geturl("timestamp");
 	var checkId = geturl("checkId");
@@ -35,7 +35,8 @@ mui.plusReady(function() {
 	//	alert(checkId);
 	//      alert(sjc)
 	gcmc = decodeURI(gcmc);
-	//	gclb = decodeURI(gclb);
+	CityName = decodeURI(CityName);
+//	alert(CityName)
 	mc = decodeURI(mc);
 	//				alert(xmid+"  "+mc+"  "+sjc); 
 	var a1 = document.getElementById('a1');
@@ -260,7 +261,7 @@ mui.plusReady(function() {
 				//				alert(data[0].检查日期);
 				var length = data.length;
 				for(var i = 0; i < length - 1; i++) {
-					mc.value = data[i].名称;
+					mc.value = CityName;
 					jcbw.value = data[i].检查部位;
 					jcrq.value = data[i].检查日期;
 					jcry.value = data[i].检查人员;
