@@ -354,15 +354,15 @@ mui.plusReady(function() {
 		if(mydata.jcrq.length < 1) {
 			return callback('检查日期不能为空！');
 		}
-		if(mydata.sgbz.length < 1) {
-			return callback('施工班组不能为空！');
-		}
-		if(mydata.zzxm.length < 1) {
-			return callback('组长姓名不能为空！');
-		}
-		if(mydata.sgrq.length < 1) {
-			return callback('施工日期不能为空！');
-		}
+//		if(mydata.sgbz.length < 1) {
+//			return callback('施工班组不能为空！');
+//		}
+//		if(mydata.zzxm.length < 1) {
+//			return callback('组长姓名不能为空！');
+//		}
+//		if(mydata.sgrq.length < 1) {
+//			return callback('施工日期不能为空！');
+//		}
 		//		alert(mydata.mc)
 		mui.ajax(url + 'my_plus/my_fhys_bj_xie.php', {
 			data: {
