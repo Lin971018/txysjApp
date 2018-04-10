@@ -85,6 +85,8 @@ mui.plusReady(function() {
 	//监听upload_camera,打开原生操作列表
 	var upload_camera = document.getElementById('upload_camera');
 
+
+	
 	//基本信息，读数据
 	var cdfj = [];
 	//右上角按钮监听
@@ -259,26 +261,48 @@ mui.plusReady(function() {
 			success: function(data) {
 				//				alert(data);
 				//				alert(data[0].检查日期);
-				var length = data.length;
-				for(var i = 0; i < length - 1; i++) {
+				if (data[0].检查日期 !='') {
+					var length = data.length;
+					for(var i = 0; i < length - 1; i++) {
+						mc.value = CityName;
+						jcbw.value = data[i].检查部位;
+						jcrq.value = data[i].检查日期;
+						jcry.value = data[i].检查人员;
+						sgbz.value = data[i].施工班组;
+						zzxm.value = data[i].组长姓名;
+						lxdh.value = data[i].联系电话;
+						sgrq.value = data[i].施工日期;
+						gzms.value = data[i].工作描述;
+					}
+				} else{
 					mc.value = CityName;
-					jcbw.value = data[i].检查部位;
-					jcrq.value = data[i].检查日期;
-					jcry.value = data[i].检查人员;
-					sgbz.value = data[i].施工班组;
-					zzxm.value = data[i].组长姓名;
-					lxdh.value = data[i].联系电话;
-					sgrq.value = data[i].施工日期;
-					gzms.value = data[i].工作描述;
+				//当前日期
+					var myDate = new Date();
+					var mytime = myDate.getTime();
+					jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
 				}
+				
 			},
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
 				//alert('ajax错误'+type); 
-				return callback('ajax错误' + type + errorThrown);
+//				return callback('ajax错误' + type + errorThrown);
 			}
 		});
 	};
+		
+	//当前日期
+	var myDate = new Date();
+	var mytime = myDate.getTime();
+	jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+	
+	//日期监听
+	jcrq.addEventListener('tap', function() {
+		plus.nativeUI.pickDate(function(e) {
+			d = e.date;
+			jcrq.value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+		});
+	});
 	//基本信息保存
 	save.addEventListener('tap', function() {
 		var mydata = {
@@ -416,7 +440,7 @@ mui.plusReady(function() {
 			error: function(xhr, type, errorThrown) {
 				//异常处理；
 				//alert('ajax错误'+type); 
-				return callback('ajax错误' + type + errorThrown);
+//				return callback('ajax错误' + type + errorThrown);
 			}
 		});
 	}
