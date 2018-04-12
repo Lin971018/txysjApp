@@ -177,7 +177,7 @@ mui.plusReady(function() {
 					});});
 	//接收值
 	window.addEventListener('json_bj', function(event) {
-		//关闭遮罩层
+		//关闭遮罩层		
 		setTimeout(function() {
 			ws.setStyle({
 				mask: "none"
@@ -186,6 +186,7 @@ mui.plusReady(function() {
 		}, 10);
 		var flag = event.detail.flag;
 		if(flag == 'ok') {
+			window.location.reload();
 			var newcdlx = event.detail.cdlx;
 			var newcdgs = event.detail.cdgs; //测点个数
 			var newcdlxbh = event.detail.cdlxbh; //测点编号
