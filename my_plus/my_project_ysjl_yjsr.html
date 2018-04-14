@@ -19,8 +19,8 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-		    <h1 class="mui-title">批量输入</h1>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">批量输入</h1>
 		</header>
 		<p></p>
 		<div class="mui-content">
@@ -146,8 +146,9 @@
 						}
 					});
 				})
-				
+
 				ok.addEventListener('tap', function() {
+					document.getElementById("ok").disabled=true;
 					function GetRandomNum(Min, Max) {
 						var Range = Max - Min;
 						var Rand = Math.random();
@@ -158,11 +159,11 @@
 					for(var i = 0; i < cdgs.value; i++) {
 						//alert(sczmin.value+"---"+sczmax.value);
 						var num = GetRandomNum(sczmin.value, sczmax.value);
-						nums += ","+ num;
-//						alert(num);
+						nums += "," + num;
+						//						alert(num);
 					}
 					nums = nums.substr(1);
-//					alert(nums);
+					//					alert(nums);
 					mui.ajax(url + 'my_project_yjsr.php', {
 						data: {
 							sjc: sjc,
@@ -174,16 +175,12 @@
 						type: 'post',
 						timeout: 10000,
 						success: function(data) {
-//							alert(data)
+							//							alert(data)
 							//alert(data['sqldata']);//数据库里最大的编号 +1后 作为本次创建的起始编号
 							if(data.result == 'success') {
-								var target = plus.webview.getWebviewById('my_project_ysjl_kpfl.html');
-								target.reload(true);
+								plus.nativeUI.toast('保存成功！');
 								mui.back();
-								mui.toast('保存成功！', {
-									duration: 'long',
-									type: 'div'
-								});
+								return callback('');
 							} else {
 								return callback('服务器返回error');
 							}
@@ -194,6 +191,12 @@
 							return callback('ajax错误' + type + errorThrown);
 						}
 					});
+					var target = plus.webview.currentWebview().opener();
+						mui.fire(target, 'json_bj', {
+							flag: 'ok'
+							
+						});
+						mui.back();
 				});
 
 				//关闭按钮

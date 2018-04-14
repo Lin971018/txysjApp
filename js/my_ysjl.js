@@ -28,14 +28,17 @@ mui.plusReady(function() {
 	}
 	var xmid = geturl("id");
 	var CityName = geturl("CityName");
+	var ysbw = geturl("jcbw");//检查部位
+	var ysrq = geturl("jcrq");//检查日期
 	var mc = geturl("mc");
 	var sjc = geturl("timestamp");
 	var checkId = geturl("checkId");
 	var gcmc = geturl("gcmc");
 	//	alert(checkId);
 	//      alert(sjc)
+	ysbw = decodeURI(ysbw);
 	gcmc = decodeURI(gcmc);
-	CityName = decodeURI(CityName);
+	CityName = decodeURI(CityName);//转码成中文
 //	alert(CityName)
 	mc = decodeURI(mc);
 	//				alert(xmid+"  "+mc+"  "+sjc); 
@@ -92,13 +95,10 @@ mui.plusReady(function() {
 	//右上角按钮监听
 	my_popover.addEventListener('tap', function() {
 		//		alert(sjc)
-		var btnArray = [{
-				title: "新增测点"
-				
-				
-			},
-			//{title:"相册"}
-		];
+		var btnArray = [
+            {title:"新增测点"},
+            {title:"批量测点"}
+            ];
 		plus.nativeUI.actionSheet({
 			title: "操作",
 			cancel: "取消",
@@ -148,21 +148,33 @@ mui.plusReady(function() {
 						},
 					});
 					break;
-			}
-		});
-	});
-	
-	//一键输入按钮监听
-	plsr.addEventListener('tap', function() {
-		//打开新webview，模仿弹窗
-		document.getElementById("scqding").disabled=true;
+					case 2: //新增测点
+					//遮罩效果
+					ws = null;
+					ws = plus.webview.currentWebview();
+					// 显示遮罩层
+					ws.setStyle({
+						mask: "rgba(0,0,0,0.7)"
+					});
+					// 点击关闭遮罩层
+					//					ws.addEventListener("maskClick", function() {
+					//						ws.setStyle({
+					//							mask: "none"
+					//						});
+					//					}, false);
+					//打开新webview，模仿弹窗
 					mui.openWindow({
 						url: 'my_project_ysjl_yjsr.html',
 						id: 'my_project_ysjl_yjsr',
 						styles: {
-							
+							width: '80%',
+							height: '80%',
+							margin: 'auto'
 						},
 						extras: {
+							name: 'w',
+							//							xmid: xmid,
+							//							gclb: gclb,
 							sjc: sjc,
 							checkId: checkId
 						},
@@ -174,10 +186,38 @@ mui.plusReady(function() {
 						waiting: {
 							autoShow: false, //自动显示等待框
 						},
-					});});
+					});
+					break;
+			}
+		});
+	});
+	
+	//一键输入按钮监听
+//	plsr.addEventListener('tap', function() {
+//		//打开新webview，模仿弹窗
+//		document.getElementById("scqding").disabled=true;
+//					mui.openWindow({
+//						url: 'my_project_ysjl_yjsr.html',
+//						id: 'my_project_ysjl_yjsr',
+//						styles: {
+//							
+//						},
+//						extras: {
+//							sjc: sjc,
+//							checkId: checkId
+//						},
+//						show: {
+//							autoShow: true, //页面loaded事件发生后自动显示
+//							aniShow: 'slide-in-right', //页面显示动画
+//							duration: '100' //页面动画持续时间
+//						},
+//						waiting: {
+//							autoShow: false, //自动显示等待框
+//						},
+//					});});
 	//接收值
 	window.addEventListener('json_bj', function(event) {
-		//关闭遮罩层		
+		//关闭遮罩层
 		setTimeout(function() {
 			ws.setStyle({
 				mask: "none"
@@ -191,7 +231,7 @@ mui.plusReady(function() {
 			var newcdgs = event.detail.cdgs; //测点个数
 			var newcdlxbh = event.detail.cdlxbh; //测点编号
 			var newqsbh = event.detail.qsbh - 0; //起始编号数字部分
-			//			window.location.reload();
+			//			
 			for(var i = newqsbh; i < newcdgs - 0 + newqsbh; i++) {
 				var newbhao = newcdlxbh + i;
 				//				createscsl(newbhao, newcdlx);  
@@ -249,7 +289,7 @@ mui.plusReady(function() {
 			//info.innerHTML = text+"\"按钮";
 		});
 	};
-
+//alert(ysbw+"   "+ysrq);
 	//获取基本信息
 	var ajaxformdata = function() {
 		mui.ajax(url + 'my_plus/my_project_xinx.php', {
@@ -266,7 +306,7 @@ mui.plusReady(function() {
 					var length = data.length;
 					for(var i = 0; i < length - 1; i++) {
 						mc.value = CityName;
-						jcbw.value = data[i].检查部位;
+						jcbw.value = ysbw;
 						jcrq.value = data[i].检查日期;
 						jcry.value = data[i].检查人员;
 						sgbz.value = data[i].施工班组;
@@ -277,10 +317,8 @@ mui.plusReady(function() {
 					}
 				} else{
 					mc.value = CityName;
-				//当前日期
-					var myDate = new Date();
-					var mytime = myDate.getTime();
-					jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+					jcbw.value = ysbw;
+					jcrq.value = ysrq;
 				}
 				
 			},
@@ -292,10 +330,6 @@ mui.plusReady(function() {
 		});
 	};
 		
-	//当前日期
-	var myDate = new Date();
-	var mytime = myDate.getTime();
-	jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
 	
 	//日期监听
 	jcrq.addEventListener('tap', function() {
