@@ -28,14 +28,17 @@ mui.plusReady(function() {
 	}
 	var xmid = geturl("id");
 	var CityName = geturl("CityName");
+	var ysbw = geturl("jcbw");//检查部位
+	var ysrq = geturl("jcrq");//检查日期
 	var mc = geturl("mc");
 	var sjc = geturl("timestamp");
 	var checkId = geturl("checkId");
 	var gcmc = geturl("gcmc");
 	//	alert(checkId);
 	//      alert(sjc)
+	ysbw = decodeURI(ysbw);
 	gcmc = decodeURI(gcmc);
-	CityName = decodeURI(CityName);
+	CityName = decodeURI(CityName);//转码成中文
 //	alert(CityName)
 	mc = decodeURI(mc);
 	//				alert(xmid+"  "+mc+"  "+sjc); 
@@ -248,7 +251,7 @@ mui.plusReady(function() {
 			//info.innerHTML = text+"\"按钮";
 		});
 	};
-
+//alert(ysbw+"   "+ysrq);
 	//获取基本信息
 	var ajaxformdata = function() {
 		mui.ajax(url + 'my_plus/my_project_xinx.php', {
@@ -265,7 +268,7 @@ mui.plusReady(function() {
 					var length = data.length;
 					for(var i = 0; i < length - 1; i++) {
 						mc.value = CityName;
-						jcbw.value = data[i].检查部位;
+						jcbw.value = ysbw;
 						jcrq.value = data[i].检查日期;
 						jcry.value = data[i].检查人员;
 						sgbz.value = data[i].施工班组;
@@ -276,10 +279,8 @@ mui.plusReady(function() {
 					}
 				} else{
 					mc.value = CityName;
-				//当前日期
-					var myDate = new Date();
-					var mytime = myDate.getTime();
-					jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
+					jcbw.value = ysbw;
+					jcrq.value = ysrq;
 				}
 				
 			},
@@ -291,10 +292,6 @@ mui.plusReady(function() {
 		});
 	};
 		
-	//当前日期
-	var myDate = new Date();
-	var mytime = myDate.getTime();
-	jcrq.value = myDate.getFullYear() + "-" + (myDate.getMonth() + 1) + "-" + myDate.getDate();
 	
 	//日期监听
 	jcrq.addEventListener('tap', function() {
