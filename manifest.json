@@ -3,7 +3,7 @@
 	"id": "H5E321129",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "建筑行业资料送检",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "2018.04.07",/*应用版本名称*/
+		"name": "2018.04.14",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -296,7 +296,8 @@
 					"js/setPullToRefresh.js"
 				],
 				"refer": [
-					"knowledge_plus/knowledge_list.html"
+					"knowledge_plus/knowledge_list.html",
+					"knowledge_plus/kno_zlzs_list.html"
 				],
 				"priority": 0
 			},
@@ -905,7 +906,9 @@
 					"css/my_css.css",
 					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"my_plus/my_project_ysjl_kpfl.html"
+				],
 				"priority": 0
 			},
 			"my_plus/my_project_scsl_scsl.html": {
@@ -1003,7 +1006,9 @@
 					"my_plus/my_project_ysjl_ysjl.html"
 				],
 				"refer": [
-					"my_plus/my_project_ysjl_add.html"
+					"my_plus/my_project_ysjl_add.html",
+					"my_plus/my_project_ysjl_list.html",
+					"my_plus/my_project_add.html"
 				],
 				"priority": 0
 			},
@@ -1014,6 +1019,13 @@
 					"js/immersed.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"knowledge_plus/kno_zlzs_list.html": {
+				"resources": [],
+				"refer": [
+					"knowledge_plus/kno_zlzs_nr.html"
+				],
 				"priority": 0
 			}
 		},

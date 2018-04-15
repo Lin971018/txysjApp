@@ -280,7 +280,7 @@
 				}
 				addImg.innerHTML=addPhoHtml;
 			};
-			
+//			alert(bh);
 			//加载数据
 			mui.ajax(url+'adminphp/pc_zlzslb.php',{
 				data:{
@@ -290,15 +290,16 @@
 				dataType:'json',
 				type:'post',
 				timeout:10000,
+//				alert(data);
 				success:function(data){
 					var cout=data.length-1;
 					if (cout>0) {
 						var	$sctp="",
 							$tbsm="",
 							$zyyd="";							
-						$sctp=data[0].上传图片;
-						$tbsm=data[0].填表说明;
-						$zyyd=data[0].注意要点;
+						$sctp=data[0];
+						$tbsm=data[1];
+						$zyyd=data[2];
 						creImg($sctp);
 						if ($tbsm) {
 							myp[0].innerHTML=$tbsm;
