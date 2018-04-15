@@ -66,8 +66,9 @@
 			var zlzslx= self.zlkmc;
 			var mobile = self.mobile;
 			var uid = self.uid;
+			var xmid = self.xmid;
 			zlzslx=decodeURI(zlzslx);
-//			alert(zlzslx);
+//			alert(xmid);
 			var doc=document;
 			var h1=doc.getElementsByTagName("h1");
 			h1[0].innerText=zlzslx;
@@ -189,6 +190,7 @@
 					url: "my_project_add.html",
 					styles: webview_style,
 					extras:{
+						xmid:xmid,
 						id:id,
 						Bh:Bh,
 						cs:zlzslx,

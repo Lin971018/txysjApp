@@ -116,7 +116,7 @@
 						var Name=data[i].project.Name;	//工程名称
 						var CityName=data[i].project.CityName;	//地区						
 						var TypeName=data[i].project.TypeName;	//工程类别
-						
+//						alert(ProjectId);
 						var TemperatureMin=data[i].weather.TemperatureMin;	//最低温度
 						var TemperatureMax=data[i].weather.TemperatureMax;	//最高温度
 						var TemperatureAverage=data[i].weather.TemperatureAverage;	//平均温度
@@ -148,7 +148,7 @@
 					AddProjectList('0644bce1-88af-4a2d-98c9-bfe73c7df269','例子项目','中山','建筑工程','-------','-------','-------');
 				}
 			});				
-		var AddProjectList = function(xmid,xmmc,xmdq,xmlb,wendu,fgNormal,fgSame) {		
+		var AddProjectList = function(ProjectId,xmmc,xmdq,xmlb,wendu,fgNormal,fgSame) {		
 			var xmmc=xmmc;
 			//汉字编码，为了get传值
 			var Name=encodeURI(encodeURI(xmmc));
@@ -158,6 +158,8 @@
 			var xmlb='项目类别：'+xmlb;
 			var jtrq='今天：'+todaydate+'-----';
 			var jtwd=wendu;
+			var xmid=ProjectId;
+//			alert(xmid);
 			var yhrq='养护28天试件日期：'+fgNormal;
 			var hyrq='同条件护养达600度试件日期：'+fgSame;
 			var zy='注意：试件送检';
@@ -277,7 +279,7 @@
 							hardwareAccelerated:false
 					},
 					extras:{
-						xmid:xmid,
+//						xmid:xmid,
 						xmmc:xmmc
 					},					
 					waiting: {

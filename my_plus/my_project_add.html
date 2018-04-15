@@ -73,6 +73,8 @@
 				csmc = self.csmc; //表格名称
 				mobile = self.mobile; //手机号码
 				uid = self.uid; //用户id
+				xmid = self.xmid; //xmid
+				alert(xmid)
 				var doc = document;
 				//              名称表格
 				var bgmc = doc.getElementById("bgmc");
@@ -141,13 +143,15 @@
 							//							当前时间戳
 							timestamp: timestamp,
 							//                          用户id
-							uid: uid
+							uid: uid,
+							//xmid
+							xmid :xmid
 						},
 						type: 'post',
 						dataType: 'json',
 						timeout: 10000,
 						success: function(data) {
-							//							alert(data);
+//														alert(data);
 							if(data.result == 'success') {
 								var target = plus.webview.getWebviewById('my_project_ysjl_kpfl.html');
 								target.reload(true);
