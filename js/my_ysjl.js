@@ -95,13 +95,10 @@ mui.plusReady(function() {
 	//右上角按钮监听
 	my_popover.addEventListener('tap', function() {
 		//		alert(sjc)
-		var btnArray = [{
-				title: "新增测点"
-				
-				
-			},
-			//{title:"相册"}
-		];
+		var btnArray = [
+            {title:"新增测点"},
+            {title:"批量测点"}
+            ];
 		plus.nativeUI.actionSheet({
 			title: "操作",
 			cancel: "取消",
@@ -151,21 +148,33 @@ mui.plusReady(function() {
 						},
 					});
 					break;
-			}
-		});
-	});
-	
-	//一键输入按钮监听
-	plsr.addEventListener('tap', function() {
-		//打开新webview，模仿弹窗
-		document.getElementById("scqding").disabled=true;
+					case 2: //新增测点
+					//遮罩效果
+					ws = null;
+					ws = plus.webview.currentWebview();
+					// 显示遮罩层
+					ws.setStyle({
+						mask: "rgba(0,0,0,0.7)"
+					});
+					// 点击关闭遮罩层
+					//					ws.addEventListener("maskClick", function() {
+					//						ws.setStyle({
+					//							mask: "none"
+					//						});
+					//					}, false);
+					//打开新webview，模仿弹窗
 					mui.openWindow({
 						url: 'my_project_ysjl_yjsr.html',
 						id: 'my_project_ysjl_yjsr',
 						styles: {
-							
+							width: '80%',
+							height: '80%',
+							margin: 'auto'
 						},
 						extras: {
+							name: 'w',
+							//							xmid: xmid,
+							//							gclb: gclb,
 							sjc: sjc,
 							checkId: checkId
 						},
@@ -177,7 +186,35 @@ mui.plusReady(function() {
 						waiting: {
 							autoShow: false, //自动显示等待框
 						},
-					});});
+					});
+					break;
+			}
+		});
+	});
+	
+	//一键输入按钮监听
+//	plsr.addEventListener('tap', function() {
+//		//打开新webview，模仿弹窗
+//		document.getElementById("scqding").disabled=true;
+//					mui.openWindow({
+//						url: 'my_project_ysjl_yjsr.html',
+//						id: 'my_project_ysjl_yjsr',
+//						styles: {
+//							
+//						},
+//						extras: {
+//							sjc: sjc,
+//							checkId: checkId
+//						},
+//						show: {
+//							autoShow: true, //页面loaded事件发生后自动显示
+//							aniShow: 'slide-in-right', //页面显示动画
+//							duration: '100' //页面动画持续时间
+//						},
+//						waiting: {
+//							autoShow: false, //自动显示等待框
+//						},
+//					});});
 	//接收值
 	window.addEventListener('json_bj', function(event) {
 		//关闭遮罩层
@@ -189,11 +226,12 @@ mui.plusReady(function() {
 		}, 10);
 		var flag = event.detail.flag;
 		if(flag == 'ok') {
+			window.location.reload();
 			var newcdlx = event.detail.cdlx;
 			var newcdgs = event.detail.cdgs; //测点个数
 			var newcdlxbh = event.detail.cdlxbh; //测点编号
 			var newqsbh = event.detail.qsbh - 0; //起始编号数字部分
-			//			window.location.reload();
+			//			
 			for(var i = newqsbh; i < newcdgs - 0 + newqsbh; i++) {
 				var newbhao = newcdlxbh + i;
 				//				createscsl(newbhao, newcdlx);  

@@ -167,7 +167,7 @@
 							</div>
 							<div class="mui-input-row">
 								<label>检查日期：</label>
-								<input type="text" id="jcrq" placeholder="检查日期">
+								<input type="date" id="jcrq" placeholder="检查日期">
 							</div>
 							<div class="mui-input-row">
 								<label>检查人员：</label>
@@ -315,7 +315,7 @@
 						<div class="mui-button-row my_margintop10px">
 							<button id="scgbi" type="button" class="mui-btn mui-btn-primary">关闭</button>
 							<button id="scqding" type="button" class="mui-btn mui-btn-primary">确定</button>
-							<button id="plsr" type="button" class="mui-btn mui-btn-primary">批量</button>
+							<!--<button id="plsr" type="button" class="mui-btn mui-btn-primary">批量</button>-->
 						</div>
 
 					</div>
@@ -362,7 +362,8 @@
         //长按保存截图并分享到微信
         mydiv.addEventListener('longtap',function(){
            var a = [
-            {title:"分享"}
+            {title:"分享"},
+            {title:"保存"}
             ];
         	plus.nativeUI.actionSheet({
         		cancel :"取消",
@@ -400,7 +401,50 @@
                      })
                     },500);
                         break;
-        		}
+        		    //保存到相册
+        		    case 2:
+        		    html2canvas(jp, {
+                        onrendered: function(canvas) {
+	                                var imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
+	                                    img = imgjpeg.src;
+                                    }
+                    });
+                    setTimeout(function(){
+                    	 mui.ajax(url+'my_plus/my_project_base64.php',{
+                     	data:{
+                     		img:img
+                     	},
+                     	dataType:'json',
+                     	type:'post',
+                     	timeout:1000,
+                     	success:function(data){
+                     		function createDownload(){
+	                            var dtask = plus.downloader.createDownload(url+data.result,{},function(d,status){
+		                     // 下载完成
+		                    if ( status == 200 ){
+//			                    alert( "Download success: " + d.filename );
+			                    plus.gallery.save(d.filename, function(){
+			                    alert('保存成功');       
+		                        }, function(e){
+			                    outSet('保存失败: '+JSON.stringify(e));
+		                        });
+		                    } else {
+			                    alert( "Download failed: " + status ); 
+		                    }   
+	                    });
+	                    //dtask.addEventListener( "statechanged", onStateChanged, false );
+	                    dtask.start(); 
+                        }createDownload();           
+                     	},
+                     	error: function(xhr, type, errorThrown) {
+				        //异常处理；
+				        alert('ajax错误'+type); 
+//				        return callback('ajax错误' + type + errorThrown);
+			           }
+                     })
+                    },500);
+                break;
+                }
         	})
         });
 		mui.init({
