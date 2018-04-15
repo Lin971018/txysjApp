@@ -142,8 +142,8 @@
 				//获取项目mobile值
 				var self = plus.webview.currentWebview();
 				var mobile = self.mobile;
-				var uid = self.uid;	
-
+				var uid = self.uid;
+				var xmid = self.xmid;	
 				var today = new Date();
 				var year = today.getFullYear();
 				var month = today.getMonth() + 1;
@@ -182,7 +182,8 @@
 								extras: {
 									zlkmc: zlkmc,
 									mobile: mobile,
-									uid: uid
+									uid: uid,
+									xmid:xmid
 								},
 								show: {
 									aniShow: "pop-in"
@@ -379,6 +380,7 @@
 					data: {
 						mobile: mobile,
                         zlkmc:zlkmc,
+                        xmid:xmid
 					},
 					dataType: 'json',
 					type: 'POST',

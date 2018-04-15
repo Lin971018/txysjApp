@@ -73,6 +73,8 @@
 				csmc = self.csmc; //表格名称
 				mobile = self.mobile; //手机号码
 				uid = self.uid; //用户id
+				xmid = self.xmid;
+				
 				var doc = document;
 				//              名称表格
 				var bgmc = doc.getElementById("bgmc");
@@ -141,7 +143,9 @@
 							//							当前时间戳
 							timestamp: timestamp,
 							//                          用户id
-							uid: uid
+							uid: uid,
+							//xmid
+							xmid : xmid
 						},
 						type: 'post',
 						dataType: 'json',
