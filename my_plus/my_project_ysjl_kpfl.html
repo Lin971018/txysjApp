@@ -143,8 +143,7 @@
 				var self = plus.webview.currentWebview();
 				var mobile = self.mobile;
 				var uid = self.uid;	
-				var xmid = self.xmid;
-//				alert(xmid);
+
 				var today = new Date();
 				var year = today.getFullYear();
 				var month = today.getMonth() + 1;
@@ -183,8 +182,7 @@
 								extras: {
 									zlkmc: zlkmc,
 									mobile: mobile,
-									uid: uid,
-									xmid:xmid
+									uid: uid
 								},
 								show: {
 									aniShow: "pop-in"
@@ -381,7 +379,6 @@
 					data: {
 						mobile: mobile,
                         zlkmc:zlkmc,
-                        xmid:xmid
 					},
 					dataType: 'json',
 					type: 'POST',
