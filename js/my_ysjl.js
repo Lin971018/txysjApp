@@ -97,7 +97,7 @@ mui.plusReady(function() {
 		//		alert(sjc)
 		var btnArray = [
             {title:"新增测点"},
-            {title:"批量测点"}
+            {title:"批量实测"}
             ];
 		plus.nativeUI.actionSheet({
 			title: "操作",
