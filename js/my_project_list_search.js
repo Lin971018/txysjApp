@@ -19,14 +19,14 @@ mui.plusReady(function(){
 	my_popover.addEventListener('tap',function(){
 		//alert("搜索");
 		var bts=["确认","取消"];
-		plus.nativeUI.prompt("请输入内容",function(e){
+		plus.nativeUI.prompt(" ",function(e){
 			var i=e.index;
 //			alert(e.value);
 			if(i==0){
 				ajaxDate(e.value,mobile);
 				//alert(mobile);
 			}
-		},"测试","内容",bts);
+		},"请输入表格名称","内容",bts);
 		
 
 	});

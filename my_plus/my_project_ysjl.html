@@ -83,6 +83,21 @@
 			var uid = self.uid;
 			var xmid = self.xmid;
 //			alert(uid);
+			//获取url参数值
+			function geturl(name){
+				var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				var r = window.location.search.substr(1).match(reg);
+				if(r!=null)return  unescape(r[2]);
+				return null;
+			}
+			var self = plus.webview.currentWebview();
+			var Name = self.Name;
+//			var Name=geturl("Name");
+			Name=decodeURI(Name);
+//			alert(Name);
+			
+			var h1=document.getElementsByTagName('h1');
+			h1[0].firstChild.nodeValue=Name;
 			
 			//判断积分是否大于等于100，是否有查看资料知识的权限
 //			var judgementJfen=function(jfen){
