@@ -68,7 +68,7 @@
 				height: 498px;
 				margin: auto;
 				border: 1px #C6C6C6 solid;
-				background-size: 100% 100%;
+				/*background-size: 100% 100%;*/
 				/*背景图片充满div*/
 			}
 			
@@ -346,104 +346,144 @@
 			<!--Camera管理摄像头设备，可用于拍摄照片、录制视频文件。      -->
 		</div>
 	</body>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script src="../js/mui.min.js"></script>
 	<script src="../js/common.js"></script>
 	<script src="../js/immersed.js"></script>
 	<script src="../js/service.js"></script>
-	<script src="../js/my_ysjl.js"></script>
+	<script src="../js/my_ysjl.js"></script>  
 	<script src="../js/html2canvas.js"></script>  
     <script src="../js/canvas2image.js"></script> 
-    <script src="../js/share.js"></script>
+    <script src="../js/share.js"></script> 
 	<!--<script src="../js/setPullToRefresh.js"></script>-->
-    <script type="text/javascript">	
-		var mydiv = document.getElementById("mydiv");	
-        var img;
-        
+    <script type="text/javascript">			
         //长按保存截图并分享到微信
         mydiv.addEventListener('longtap',function(){
-           var a = [
-            {title:"分享"},
-            {title:"保存"}
+        	//获取像素PixelRatio
+		    var getPixelRatio = function(context){
+			var backingStore = context.backingStorePixelRatio||context.webkitBackingStorePixelRatio||context.mozBackingStorePixelRatio||context.msBackingStorePixelRatio||context.oBackingStorePixelRatio||context.backingStorePixelRatio||1;
+			return (window.devicePixelRatio||1)/backingStore;
+		}
+            var width = 360,  // 获取(原生）dom 宽度
+                height = 498, // 获取(原生）dom 高
+                offsetTop = 100,  //元素距离顶部的偏移量
+                canvas = document.createElement('canvas'), //创建canvas 对象
+                context = canvas.getContext('2d'),  //创建画布        
+                scaleBy = getPixelRatio(context); //获取像素密度的方法 (也可以采用自定义缩放比例)
+//              console.log(offsetTop)
+            canvas.width = width * scaleBy;   //这里 由于绘制的dom 为固定宽度，居中，所以没有偏移
+            canvas.height = (height + offsetTop) * scaleBy;  // 注意高度问题，由于顶部有个距离所以要加上顶部的距离，解决图像高度偏移问题
+            canvas.style.width = (width * scaleBy)+'px';
+            canvas.style.height = ((height + offsetTop) * scaleBy)+'px';      
+            context.scale(scaleBy, scaleBy); //放大画布 
+            var opts = { 
+                    allowTaint:true,//允许加载跨域的图片
+                    tainttest:true, //检测每张图片都已经加载完成
+                    scale:scaleBy, // 添加的scale 参数
+                    canvas:canvas, //自定义 canvas
+                    logging: true, //日志开关，发布的时候记得改成false
+                    width:width, //dom 原始宽度
+                    height:height //dom 原始高度
+                };
+            var img;
+            var a = [
+                {title:"分享"},
+                {title:"保存"}
             ];
         	plus.nativeUI.actionSheet({
         		cancel :"取消",
         		buttons	: a
         	},function(e){
         		var index = e.index;
-        		switch(index){
+        		switch(index){ 
         			case 0: 
         			break;
-        			case 1:
-                   //截图
-                   html2canvas(jp, {
-                        onrendered: function(canvas) {
-	                                var imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
-	                                    img = imgjpeg.src;
-                                    }
-                     });
-                     //将base64转换为jpg格式保存在upload
-                    setTimeout(function(){
-                    	 mui.ajax(url+'my_plus/my_project_base64.php',{
-                     	data:{
-                     		img:img
-                     	},
-                     	dataType:'json',
-                     	type:'post',
-                     	timeout:1000,
-                     	success:function(data){
-                     		shareimg(window,url+data.result);//分享到微信
-                     	},
-                     	error: function(xhr, type, errorThrown) {
-				        //异常处理；
-//				        alert('ajax错误'+type); 
-				        return callback('ajax错误' + type + errorThrown);
-			           }
-                     })
-                    },500);
-                        break;
-        		    //保存到相册
-        		    case 2:
-        		    html2canvas(jp, {
-                        onrendered: function(canvas) {
-	                                var imgjpeg = Canvas2Image.saveAsJPEG(canvas,true); 
-	                                    img = imgjpeg.src;
-                                    }
-                    });
-                    setTimeout(function(){
-                    	 mui.ajax(url+'my_plus/my_project_base64.php',{
-                     	data:{
-                     		img:img
-                     	},
-                     	dataType:'json',
-                     	type:'post',
-                     	timeout:1000,
-                     	success:function(data){
-                     		function createDownload(){
-	                            var dtask = plus.downloader.createDownload(url+data.result,{},function(d,status){
-		                     // 下载完成
-		                    if ( status == 200 ){
-//			                    alert( "Download success: " + d.filename );
-			                    plus.gallery.save(d.filename, function(){
-			                    alert('保存成功');       
-		                        }, function(e){
-			                    outSet('保存失败: '+JSON.stringify(e));
-		                        });
-		                    } else {
-			                    alert( "Download failed: " + status ); 
-		                    }   
-	                    });
-	                    //dtask.addEventListener( "statechanged", onStateChanged, false );
-	                    dtask.start(); 
-                        }createDownload();           
-                     	},
-                     	error: function(xhr, type, errorThrown) {
-				        //异常处理；
-				        alert('ajax错误'+type); 
-//				        return callback('ajax错误' + type + errorThrown);
-			           }
-                     })
-                    },500);
-                break;
+        			//分享到微信
+        			case 1:       
+                    html2canvas(jp,opts).then(function (canvas) {                           
+                            canvas.style.width = width+'px';
+                            canvas.style.height = (height + offsetTop)+'px'; 
+                            console.log(canvas.style.width+" "+canvas.style.height); 
+                            var imgjpeg = Canvas2Image.convertToJPEG(canvas,canvas.width,canvas.height);
+                            img = imgjpeg.src;                            
+                            console.log(img);                                      
+                    	mui.ajax(url+'my_plus/my_project_base64.php',{
+                     	    data:{  
+                     		    img:img,
+                     		    flag:1
+                     	    },
+                     	    dataType:'json',
+                     	    type:'post',
+                     	    timeout:1000,
+                     	    success:function(data){
+//                   	    	alert(data);
+                               //下载到本地
+                               function createDownload(){
+	                                var dtask = plus.downloader.createDownload(url+data.result,{},function(d,status){
+		                                if ( status == 200 ){
+//			                                alert( "Download success: " + d.filename ); 
+                                            shareimg(window,d.filename);//分享到微信
+		                                    }else {
+			                                    alert( "分享失败: " + status ); 
+		                                    }   
+	                                    });
+	                                //dtask.addEventListener( "statechanged", onStateChanged, false );
+	                                dtask.start(); 
+                                }createDownload();                    		    
+                     	    },
+                     	    error: function(xhr, type, errorThrown) {
+				            //异常处理；
+				                    alert('ajax错误'+type); 
+//				                    return callback('ajax错误' + type + errorThrown);
+			                }
+                        })
+                    }); 
+                    break; 
+        		    //保存到相册 
+        		    case 2: 
+        		    html2canvas(jp,opts).then(function (canvas){                    
+                            canvas.style.width = width+'px';
+                            canvas.style.height = (height + offsetTop)+'px'; 
+                            console.log(canvas.style.width+" "+canvas.style.height); 
+                            var imgjpeg = Canvas2Image.convertToJPEG(canvas,canvas.width,canvas.height);                                                
+	                        img = imgjpeg.src;  
+	                        console.log(img);   
+                    	    mui.ajax(url+'my_plus/my_project_base64.php',{
+                     	        data:{
+                     		        img:img,
+                     		        flag:0
+                     	        },
+                     	        dataType:'json',
+                     	        type:'post',
+                     	        timeout:1000,
+                     	        success:function(data){
+                     	        	console.log(data.result);
+                     		    function createDownload(){
+	                                var dtask = plus.downloader.createDownload(url+data.result,{},function(d,status){
+		                            // 下载完成
+		                                if ( status == 200 ){
+//			                                alert( "Download success: " + d.filename );
+			                                plus.gallery.save(d.filename, function(){
+			                                alert('保存成功');       
+		                                    }, function(e){
+			                                        outSet('保存失败: '+JSON.stringify(e));
+		                                        });
+		                                    }else {
+			                                    alert( "保存失败: " + status ); 
+		                                    }   
+	                                    });
+	                                //dtask.addEventListener( "statechanged", onStateChanged, false );
+	                                dtask.start(); 
+                                }createDownload();           
+                     	        },
+                     	        error: function(xhr, type, errorThrown) {
+				                            //异常处理；
+				                            alert('ajax错误'+type); 
+//				                             return callback('ajax错误' + type + errorThrown);
+			                            }
+                                })
+                        });
+                    break;
                 }
         	})
         });
