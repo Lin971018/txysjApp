@@ -191,30 +191,7 @@ mui.plusReady(function() {
 			}
 		});
 	});
-	
-	//一键输入按钮监听
-//	plsr.addEventListener('tap', function() {
-//		//打开新webview，模仿弹窗
-//		document.getElementById("scqding").disabled=true;
-//					mui.openWindow({
-//						url: 'my_project_ysjl_yjsr.html',
-//						id: 'my_project_ysjl_yjsr',
-//						styles: {
-//							
-//						},
-//						extras: {
-//							sjc: sjc,
-//							checkId: checkId
-//						},
-//						show: {
-//							autoShow: true, //页面loaded事件发生后自动显示
-//							aniShow: 'slide-in-right', //页面显示动画
-//							duration: '100' //页面动画持续时间
-//						},
-//						waiting: {
-//							autoShow: false, //自动显示等待框
-//						},
-//					});});
+
 	//接收值
 	window.addEventListener('json_bj', function(event) {
 		//关闭遮罩层
@@ -239,56 +216,9 @@ mui.plusReady(function() {
 			}
 		}
 	});
-	//附件上传修改监听
-	fjscxg.addEventListener('tap', function() {
-		myform.classList.add('my_none');
-		uploader.classList.remove('my_none');
-	});
-
-	//a1基本信息监听
-	a1.addEventListener('tap', function() {
-		myform.classList.remove('my_none');
-		uploader.classList.add('my_none');
-	});
-	var camera = upload_camera.getElementsByClassName('upload_camera');
-	//				alert(camera.length);
-
-	//拍照处理
-	for(var i = 0; i < camera.length; i++) {
-		camera[i].addEventListener('tap', function() {
-			myactionSheet('yszp');
-		});
-	}
-
-	var myactionSheet = function(lx) {
-		var btnArray = [{
-			title: "拍照"
-		}, {
-			title: "相册"
-		}];
-		plus.nativeUI.actionSheet({
-			title: "操作",
-			cancel: "取消",
-			buttons: btnArray
-		}, function(e) {
-			var index = e.index;
-			var text = "你刚点击了\"";
-			switch(index) {
-				case 0:
-					text += "取消";
-					break;
-				case 1:
-					getImage(lx);
-					text += "拍照";
-					break;
-				case 2:
-					galleryImg(lx);
-					text += "相册";
-					break;
-			}
-			//info.innerHTML = text+"\"按钮";
-		});
-	};
+	
+//	alert(jcry.value);	
+	
 //alert(ysbw+"   "+ysrq);
 	//获取基本信息
 	var ajaxformdata = function() {
@@ -430,6 +360,56 @@ mui.plusReady(function() {
 			}
 		});
 	};
+	//附件上传修改监听 
+	fjscxg.addEventListener('tap', function() {
+		myform.classList.add('my_none');
+		uploader.classList.remove('my_none');
+	});
+
+	//a1基本信息监听
+	a1.addEventListener('tap', function() {
+		myform.classList.remove('my_none');
+		uploader.classList.add('my_none');
+	});
+	var camera = upload_camera.getElementsByClassName('upload_camera');
+	//				alert(camera.length);
+
+	//拍照处理
+	for(var i = 0; i < camera.length; i++) {
+		camera[i].addEventListener('tap', function() {
+			myactionSheet('yszp');
+		});
+	}
+
+	var myactionSheet = function(lx) {
+		var btnArray = [{
+			title: "拍照"
+		}, {
+			title: "相册"
+		}];
+		plus.nativeUI.actionSheet({
+			title: "操作",
+			cancel: "取消",
+			buttons: btnArray
+		}, function(e) {
+			var index = e.index;
+			var text = "你刚点击了\"";
+			switch(index) {
+				case 0:
+					text += "取消";
+					break;
+				case 1:
+					getImage(lx);
+					text += "拍照";
+					break;
+				case 2:
+					galleryImg(lx);
+					text += "相册";
+					break;
+			}
+			//info.innerHTML = text+"\"按钮";
+		});
+	};
 
 	//在画布中获取图片
 	var ajaxformdata2 = function() {
@@ -442,7 +422,7 @@ mui.plusReady(function() {
 			},
 			dataType: 'json',
 			type: 'post',
-			timeout: 10000,
+			timeout: 100000,
 			success: function(data) {
 				//						alert(data);
 				var length = data.length;
@@ -1546,7 +1526,6 @@ function upload(lx, clean) {
 		}
 		window.location.reload(); //刷新页面
 	}); //新建上传任务
-	//				alert(sjc);
 	//添加上传数据 
 	//	task.addData("lx", lx);
 	task.addData("uid", getUid());
