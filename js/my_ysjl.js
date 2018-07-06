@@ -1291,12 +1291,13 @@ mui.plusReady(function() {
     				timeout:5000,	
     				success:function(data){
     					wt.close();
-    					plus.nativeUI.alert(data.result);
+//  					plus.nativeUI.alert(data.result);
     					span2 = document.getElementById('jt'+that.innerHTML);
     					document.getElementById('cd').removeChild(that);// 删除测点DOM
     					document.getElementById('jp').removeChild(span2);
     				}, 
     				error:function(xhr, type, errorThrown){
+    					wt.close();
       					alert('ajax错误'+type+errorThrown);
 //  					return callback('ajax错误' + type + errorThrown);
     				}
