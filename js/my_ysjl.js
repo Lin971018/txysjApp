@@ -1275,8 +1275,40 @@ mui.plusReady(function() {
 			}
 		});
 	});
+	//清空单个测点
+    mui('#cd').on('longtap','span',function(e){
+    	var that = this;
+    	mui.confirm('是否删除该测点？','原始记录',['是','否'],function(e){
+    		if(e.index == 0){
+    			var wt = plus.nativeUI.showWaiting();
+    			mui.ajax(url+'my_plus/delete_point.php',{
+    				data:{
+    					bhao:that.innerHTML,
+    					sjc:sjc
+    				},
+    				type:'post',
+    				dataType:'json', 
+    				timeout:5000,	
+    				success:function(data){
+    					wt.close();
+    					plus.nativeUI.alert(data.result);
+    					span2 = document.getElementById('jt'+that.innerHTML);
+    					document.getElementById('cd').removeChild(that);// 删除测点DOM
+    					document.getElementById('jp').removeChild(span2);
+    				}, 
+    				error:function(xhr, type, errorThrown){
+      					alert('ajax错误'+type+errorThrown);
+//  					return callback('ajax错误' + type + errorThrown);
+    				}
+    			})
+    		}
+    		else{
+    		}
+    	})
+    })
 });
-
+    
+    
 //上传文件
 var i = 1,
 	gentry = null,
