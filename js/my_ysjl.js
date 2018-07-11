@@ -1278,7 +1278,7 @@ mui.plusReady(function() {
 	//清空单个测点
     mui('#cd').on('longtap','span',function(e){
     	var that = this;
-    	mui.confirm('是否删除该测点？','原始记录',['是','否'],function(e){
+    	mui.confirm('是否删除'+that.innerHTML+'测点？','原始记录',['是','否'],function(e){
     		if(e.index == 0){
     			var wt = plus.nativeUI.showWaiting();
     			mui.ajax(url+'my_plus/delete_point.php',{
